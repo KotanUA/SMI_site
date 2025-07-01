@@ -350,6 +350,7 @@
       margin-bottom: 1.5rem;
       border: 1px solid var(--border-color);
       box-shadow: var(--shadow-light);
+      animation: fadeIn 0.4s;
     }
 
     .form-section h3 {
@@ -954,8 +955,9 @@
 
     @media (max-width: 576px) {
       #sidebar {
-        width: 85%;
-        padding: 1.2rem 0.8rem;
+        width: 95%;
+        padding: 1rem;
+        box-sizing: border-box;
       }
       
       .tag-options {
@@ -1075,13 +1077,6 @@
         </div>
       </div>
       
-      <div class="form-section">
-        <h3>✍️ Запропонуйте свою новину</h3>
-        <textarea id="suggested-news" placeholder="Ваша ідея новини..." rows="3"></textarea>
-        <input type="file" id="suggestion-image" accept="image/*" multiple style="margin-top: 1rem;">
-        <button class="form-btn" onclick="submitSuggestion()">Надіслати пропозицію</button>
-      </div>
-      
       <div id="news-feed" aria-live="polite" aria-relevant="additions"></div>
       
       <button class="form-btn admin-only" style="background: #8e0000; margin-top: 2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини">
@@ -1091,6 +1086,14 @@
 
     <section id="submit" role="tabpanel" aria-labelledby="submit-tab-btn">
       <h2 class="section-title">📨 Запропоновані новини</h2>
+      
+      <div class="form-section">
+        <h3>✍️ Запропонуйте свою новину</h3>
+        <textarea id="suggested-news" placeholder="Ваша ідея новини..." rows="3"></textarea>
+        <input type="file" id="suggestion-image" accept="image/*" multiple style="margin-top: 1rem;">
+        <button class="form-btn" onclick="submitSuggestion()">Надіслати пропозицію</button>
+      </div>
+      
       <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
     </section>
 
