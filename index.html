@@ -7,43 +7,43 @@
   <title>ТСН Новини</title>
   <style>
     :root {
-      --bg-color: #ffffff; /* Белый фон */
-      --text-color: #333333; /* Тёмно-серый текст */
-      --accent-color: #c62828; /* Красный акцент */
-      --accent-color-hover: #8e0000; /* Темно-красный при наведении */
-      --success-color: #4caf50; /* Зелёный для успеха */
-      --info-color: #2196f3; /* Синий для информации */
-      --card-bg: #f9f9f9; /* Светлый фон карточек */
-      --card-bg-blur: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый */
-      --border-color: #e0e0e0; /* Светло-серая граница */
-      --header-height: 70px; /* Высота хедера */
-      --sidebar-width: 240px; /* Ширина боковой панели */
-      --font-primary: 'Segoe UI', 'Nunito', Tahoma, Geneva, Verdana, sans-serif; /* Шрифт */
-      --shadow-light: 0 4px 12px rgba(198, 40, 40, 0.1); /* Лёгкая тень */
-      --shadow-hover: 0 8px 24px rgba(198, 40, 40, 0.15); /* Тень при наведении */
-      --glass-blur: blur(16px); /* Эффект размытия */
-      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Эффект перехода */
-      --gradient: linear-gradient(135deg, #ffffff 0%, #ffecec 100%); /* Градиент фона */
-      --sidebar-shadow: 0 8px 32px rgba(150, 10, 10, 0.08); /* Тень боковой панели */
-      --modal-bg: rgba(0, 0, 0, 0.5); /* Цвет модального фона */
-      --blur: blur(12px); /* Эффект размытия */
+      --bg-color: #ffffff;
+      --text-color: #333333;
+      --accent-color: #c62828;
+      --accent-color-hover: #8e0000;
+      --success-color: #4caf50;
+      --info-color: #2196f3;
+      --card-bg: #f9f9f9;
+      --card-bg-blur: rgba(255, 255, 255, 0.9);
+      --border-color: #e0e0e0;
+      --header-height: 70px;
+      --sidebar-width: 240px;
+      --font-primary: 'Segoe UI', 'Nunito', Tahoma, Geneva, Verdana, sans-serif;
+      --shadow-light: 0 4px 12px rgba(198, 40, 40, 0.1);
+      --shadow-hover: 0 8px 24px rgba(198, 40, 40, 0.15);
+      --glass-blur: blur(16px);
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --gradient: linear-gradient(135deg, #ffffff 0%, #ffecec 100%);
+      --sidebar-shadow: 0 8px 32px rgba(150, 10, 10, 0.08);
+      --modal-bg: rgba(0, 0, 0, 0.5);
+      --blur: blur(12px);
     }
 
     [data-theme="dark"] {
-      --bg-color: #1a1a1a; /* Тёмный фон */
-      --text-color: #f0f0f0; /* Светлый текст */
-      --accent-color: #ff5252; /* Светло-красный акцент */
-      --accent-color-hover: #ff1a1a; /* Ярко-красный при наведении */
-      --success-color: #66bb6a; /* Светло-зелёный */
-      --info-color: #42a5f5; /* Светло-синий */
-      --card-bg: #2a2a2a; /* Тёмный фон карточек */
-      --card-bg-blur: rgba(40, 40, 40, 0.8); /* Полупрозрачный тёмный */
-      --border-color: #444444; /* Тёмная граница */
-      --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.25); /* Тень для тёмной темы */
-      --shadow-hover: 0 8px 24px rgba(255, 82, 82, 0.25); /* Тень при наведении */
-      --gradient: linear-gradient(135deg, #1a1a1a 0%, #2a0a0a 100%); /* Градиент для тёмной темы */
-      --sidebar-shadow: 0 8px 32px rgba(0, 0, 0, 0.35); /* Тень боковой панели */
-      --modal-bg: rgba(0, 0, 0, 0.7); /* Тёмный модальный фон */
+      --bg-color: #1a1a1a;
+      --text-color: #f0f0f0;
+      --accent-color: #ff5252;
+      --accent-color-hover: #ff1a1a;
+      --success-color: #66bb6a;
+      --info-color: #42a5f5;
+      --card-bg: #2a2a2a;
+      --card-bg-blur: rgba(40, 40, 40, 0.8);
+      --border-color: #444444;
+      --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.25);
+      --shadow-hover: 0 8px 24px rgba(255, 82, 82, 0.25);
+      --gradient: linear-gradient(135deg, #1a1a1a 0%, #2a0a0a 100%);
+      --sidebar-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      --modal-bg: rgba(0, 0, 0, 0.7);
     }
 
     * {
@@ -980,6 +980,35 @@
         justify-content: center;
       }
     }
+    
+    /* NEW STYLES FOR SUGGESTION IMAGES */
+    .suggestion-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    
+    .suggestion-image {
+      max-width: 100px;
+      max-height: 100px;
+      border-radius: 8px;
+      object-fit: cover;
+      border: 1px solid var(--border-color);
+    }
+    
+    /* ADMIN FEATURE HIDING */
+    .admin-only {
+      display: none;
+    }
+    
+    .admin-visible .admin-only {
+      display: block;
+    }
+    
+    .admin-visible .admin-inline {
+      display: inline-flex;
+    }
   </style>
 </head>
 
@@ -997,7 +1026,7 @@
   <aside id="sidebar">
     <button class="sidebar-btn active" onclick="showTab(event, 'news')" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
     <button class="sidebar-btn" onclick="showTab(event, 'submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
-    <button class="sidebar-btn" onclick="showTab(event, 'admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn" style="display:none;">⚙️ Адмін</button>
+    <button class="sidebar-btn admin-only" onclick="showTab(event, 'admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn">⚙️ Адмін</button>
   </aside>
 
   <main>
@@ -1049,12 +1078,13 @@
       <div class="form-section">
         <h3>✍️ Запропонуйте свою новину</h3>
         <textarea id="suggested-news" placeholder="Ваша ідея новини..." rows="3"></textarea>
+        <input type="file" id="suggestion-image" accept="image/*" multiple style="margin-top: 1rem;">
         <button class="form-btn" onclick="submitSuggestion()">Надіслати пропозицію</button>
       </div>
       
       <div id="news-feed" aria-live="polite" aria-relevant="additions"></div>
       
-      <button class="form-btn" style="background: #8e0000; margin-top: 2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини" hidden>
+      <button class="form-btn admin-only" style="background: #8e0000; margin-top: 2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини">
         🗑️ Видалити всі новини
       </button>
     </section>
@@ -1124,8 +1154,7 @@
           
           <div style="flex: 1; min-width: 250px;">
             <h3 style="margin-bottom: 1rem;">🖼️ Завантажити зображення:</h3>
-            <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" style="margin-bottom: 1rem; width: 100%;" />
-            <img id="preview-image" alt="Прев'ю зображення" style="max-width: 100%; display: none; border-radius: 12px; border: 1px solid var(--border-color);" />
+            <input type="file" id="image-upload" accept="image/*" multiple onchange="handleImageUpload(event)" style="margin-bottom: 1rem; width: 100%;" />
           </div>
         </div>
         
@@ -1133,6 +1162,11 @@
           <button class="form-btn" onclick="publishNews()">📢 Опублікувати</button>
           <button class="form-btn" onclick="showPreview()">👁️ Перегляд</button>
         </div>
+      </div>
+      
+      <div class="form-section">
+        <h3>📨 Запропоновані новини</h3>
+        <div id="suggestions-list-admin" aria-live="polite" aria-relevant="additions"></div>
       </div>
     </section>
   </main>
@@ -1186,33 +1220,61 @@
       if (e.ctrlKey && e.key.toLowerCase() === "u") { format('underline'); e.preventDefault(); }
     });
 
-    function previewImage(event) {
-      const f = event.target.files[0];
-      if (!f) return;
+    // Обработка загрузки нескольких изображений
+    function handleImageUpload(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+      
+      const editor = document.getElementById('editor');
       const reader = new FileReader();
-      reader.onload = function (e) {
-        const img = document.getElementById("preview-image");
-        img.src = e.target.result;
-        img.style.display = "block";
-
-        // Вставка изображения в редактор
-        const imgElem = document.createElement('img');
-        imgElem.src = e.target.result;
-        imgElem.style.maxWidth = "100%";
-        imgElem.style.borderRadius = "12px";
-        imgElem.style.marginTop = "1rem";
-        document.getElementById('editor').innerHTML += "<br>" + imgElem.outerHTML;
+      
+      const processFile = (file, index) => {
+        return new Promise((resolve) => {
+          reader.onload = function (e) {
+            const imgElem = document.createElement('img');
+            imgElem.src = e.target.result;
+            imgElem.style.maxWidth = "100%";
+            imgElem.style.borderRadius = "12px";
+            imgElem.style.marginTop = "1rem";
+            imgElem.style.display = "block";
+            editor.appendChild(imgElem);
+            
+            // Добавляем разрыв после изображения
+            if (index < files.length - 1) {
+              editor.appendChild(document.createElement('br'));
+            }
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
       };
-      reader.readAsDataURL(f);
+      
+      // Последовательная обработка файлов
+      (async function() {
+        for (let i = 0; i < files.length; i++) {
+          await processFile(files[i], i);
+        }
+      })();
     }
 
     // ---- Табы/панели ----
-    function showTab(e, tab) {
-      for (const btn of document.querySelectorAll('aside button')) btn.classList.remove('active');
-      e.currentTarget.classList.add('active');
-      for (const s of document.querySelectorAll('main>section')) s.classList.remove('active');
-      document.getElementById(tab).classList.add('active');
+  function showTab(e, tab) {
+    // Снимаем активный класс со всех кнопок
+    for (const btn of document.querySelectorAll('aside button')) {
+      btn.classList.remove('active');
     }
+    
+    // Добавляем активный класс текущей кнопке
+    e.currentTarget.classList.add('active');
+    
+    // Скрываем все секции
+    for (const s of document.querySelectorAll('main>section')) {
+      s.classList.remove('active');
+    }
+  
+  // Показываем выбранную секцию
+  document.getElementById(tab).classList.add('active');
+}
 
     function showLoginPanel() {
       document.getElementById('login-panel').style.display = 'block';
@@ -1221,14 +1283,39 @@
 
     function closeLoginPanel() { document.getElementById('login-panel').style.display = 'none'; }
 
+    // Функция форматирования даты в 24-часовом формате
+    function formatDate(date) {
+      return new Date(date).toLocaleString('uk-UA', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+      });
+    }
+
+    // Сохранение состояния входа
     function loginWriter() {
       let pass = document.getElementById('writer-pass').value.trim();
       if (pass === "admin") {
         showNotification("Авторизовано 👑", "success");
-        document.getElementById("admin-tab-btn").style.display = "";
-        document.querySelector('button[onclick="showTab(event, \'admin\')"]').style.display = "";
+        localStorage.setItem('isWriterLoggedIn', 'true');
+        toggleAdminUI(true);
         closeLoginPanel();
       } else showNotification("Невірний пароль!", "error");
+    }
+
+    // Переключение UI для администратора
+    function toggleAdminUI(loggedIn) {
+      const adminElements = document.querySelectorAll('.admin-only');
+      if (loggedIn) {
+        document.body.classList.add('admin-visible');
+        document.getElementById("admin-tab-btn").style.display = "";
+      } else {
+        document.body.classList.remove('admin-visible');
+        document.getElementById("admin-tab-btn").style.display = "none";
+      }
     }
 
     window.onclick = function (e) { if (e.target === document.getElementById('login-panel')) closeLoginPanel(); };
@@ -1239,11 +1326,47 @@
     function submitSuggestion() {
       let text = document.getElementById('suggested-news').value.trim();
       if (!text) { showNotification("Введіть пропозицію!", "error"); return; }
-      suggestions.push({ text, date: new Date().toLocaleString() });
-      localStorage.setItem('suggestions', JSON.stringify(suggestions));
-      document.getElementById('suggested-news').value = "";
-      showNotification("Дякуємо за пропозицію!", "success");
-      renderSuggestions();
+      
+      // Обработка изображений
+      const files = document.getElementById('suggestion-image').files;
+      const images = [];
+      
+      if (files.length > 0) {
+        const reader = new FileReader();
+        
+        const processFile = (file, index) => {
+          return new Promise((resolve) => {
+            reader.onload = function (e) {
+              images.push(e.target.result);
+              resolve();
+            };
+            reader.readAsDataURL(file);
+          });
+        };
+        
+        (async function() {
+          for (let i = 0; i < files.length; i++) {
+            await processFile(files[i], i);
+          }
+          
+          // Сохранение предложения с изображениями
+          suggestions.push({ text, images, date: formatDate(new Date()) });
+          localStorage.setItem('suggestions', JSON.stringify(suggestions));
+          document.getElementById('suggested-news').value = "";
+          document.getElementById('suggestion-image').value = "";
+          showNotification("Дякуємо за пропозицію!", "success");
+          renderSuggestions();
+          renderAdminSuggestions();
+        })();
+      } else {
+        // Сохранение предложения без изображений
+        suggestions.push({ text, images: [], date: formatDate(new Date()) });
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        document.getElementById('suggested-news').value = "";
+        showNotification("Дякуємо за пропозицію!", "success");
+        renderSuggestions();
+        renderAdminSuggestions();
+      }
     }
 
     function renderSuggestions() {
@@ -1252,6 +1375,34 @@
         ? suggestions.map((s, i) => `
           <div class="suggestion-item">
             <div>${s.text}</div>
+            ${s.images.length ? `
+              <div class="suggestion-images">
+                ${s.images.map(img => `<img src="${img}" class="suggestion-image" alt="Пропозиція">`).join('')}
+              </div>
+            ` : ''}
+            <div class="suggestion-date">${s.date}</div>
+            <div class="suggestion-actions admin-only">
+              <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
+              <button onclick="deleteSuggestion(${i})">🗑️ Видалити</button>
+            </div>
+          </div>
+        `).join('')
+        : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Немає запропонованих новин.</div>';
+    }
+    
+    function renderAdminSuggestions() {
+      let list = document.getElementById('suggestions-list-admin');
+      if (!list) return;
+      
+      list.innerHTML = suggestions.length
+        ? suggestions.map((s, i) => `
+          <div class="suggestion-item">
+            <div>${s.text}</div>
+            ${s.images.length ? `
+              <div class="suggestion-images">
+                ${s.images.map(img => `<img src="${img}" class="suggestion-image" alt="Пропозиція">`).join('')}
+              </div>
+            ` : ''}
             <div class="suggestion-date">${s.date}</div>
             <div class="suggestion-actions">
               <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
@@ -1267,12 +1418,28 @@
         suggestions.splice(i, 1);
         localStorage.setItem('suggestions', JSON.stringify(suggestions));
         renderSuggestions();
+        renderAdminSuggestions();
       }
     }
 
     function publishSuggestion(i) {
       let s = suggestions[i];
-      document.getElementById('editor').innerText = s.text;
+      document.getElementById('editor').innerHTML = s.text;
+      
+      // Вставляем изображения из предложения
+      if (s.images && s.images.length > 0) {
+        s.images.forEach(img => {
+          const imgElem = document.createElement('img');
+          imgElem.src = img;
+          imgElem.style.maxWidth = "100%";
+          imgElem.style.borderRadius = "12px";
+          imgElem.style.marginTop = "1rem";
+          imgElem.style.display = "block";
+          document.getElementById('editor').appendChild(imgElem);
+          document.getElementById('editor').appendChild(document.createElement('br'));
+        });
+      }
+      
       showTab({ currentTarget: document.getElementById('admin-tab-btn') }, 'admin');
       showNotification("Пропозицію завантажено в редактор", "info");
     }
@@ -1289,6 +1456,11 @@
     (() => {
       let saved = localStorage.getItem('theme');
       if (saved) document.documentElement.setAttribute('data-theme', saved);
+      
+      // Проверка сохраненного входа
+      if (localStorage.getItem('isWriterLoggedIn') === 'true') {
+        toggleAdminUI(true);
+      }
     })();
 
     // ---- ПУБЛИКАЦИЯ НОВОСТЕЙ (ADMIN) ----
@@ -1305,7 +1477,6 @@
       }
       
       let html = document.getElementById('editor').innerHTML.trim();
-      let img = document.getElementById('preview-image').src;
       if (html.length < 10) { 
         showNotification("Дуже коротка новина!", "error"); 
         return; 
@@ -1314,8 +1485,7 @@
       let item = {
         tags: selectedTags,
         html,
-        img: img.startsWith('data:') ? img : '',
-        date: new Date().toLocaleString()
+        date: formatDate(new Date())
       };
       
       news.unshift(item);
@@ -1324,8 +1494,7 @@
       
       // Сброс формы
       document.getElementById('editor').innerHTML = "";
-      document.getElementById('preview-image').style.display = "none";
-      document.getElementById('preview-image').src = "";
+      document.getElementById('image-upload').value = "";
       document.querySelectorAll('input[name="pub-tag"]').forEach(cb => cb.checked = false);
       
       // Переход на вкладку новостей
@@ -1348,19 +1517,28 @@
       
       feed.innerHTML = filteredNews.length
         ? filteredNews.map((n, i) => `
-          <div class="news">
+          <div class="news" id="news-${i}">
             <div class="news-tag">${n.tags.map(tag => tag).join(', ')}</div>
-            <div class="news-text">${n.html}${n.img ? `<img src="${n.img}" style="width:97%;border-radius:12px;margin:12px 0 0 0;" />` : ""}</div>
+            <div class="news-text">${n.html}</div>
             <time>${n.date ?? ""}</time>
             <div class="actions">
-              <button onclick="showPreviewFromFeed(${i})">👁️ Перегляд</button>
-              <button onclick="deleteNews(${i})">🗑️ Видалити</button>
+              <button onclick="copyNewsLink(${i})">🔗 Копіювати посилання</button>
+              <button class="admin-only" onclick="showPreviewFromFeed(${i})">👁️ Перегляд</button>
+              <button class="admin-only" onclick="deleteNews(${i})">🗑️ Видалити</button>
             </div>
           </div>
         `).join('')
         : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Новин за обраними тегами не знайдено.</div>';
       
       document.getElementById('delete-all-btn').hidden = !list.length;
+    }
+    
+    // Копирование ссылки на новость
+    function copyNewsLink(index) {
+      const url = window.location.href.split('#')[0] + `#news-${index}`;
+      navigator.clipboard.writeText(url).then(() => {
+        showNotification("Посилання скопійовано!", "success");
+      });
     }
 
     function deleteNews(i) {
@@ -1396,18 +1574,17 @@
       }
       
       let html = document.getElementById('editor').innerHTML.trim();
-      let img = document.getElementById('preview-image').src;
       
       document.getElementById('preview-tag').innerText = selectedTags.join(', ');
-      document.getElementById('preview-text').innerHTML = html + (img && img.startsWith('data:') ? `<img src="${img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
-      document.getElementById('preview-date').innerText = new Date().toLocaleString();
+      document.getElementById('preview-text').innerHTML = html;
+      document.getElementById('preview-date').innerText = formatDate(new Date());
       document.getElementById('preview-modal').style.display = 'flex';
     }
 
     function showPreviewFromFeed(i) {
       let n = news[i];
       document.getElementById('preview-tag').innerText = n.tags.join(', ');
-      document.getElementById('preview-text').innerHTML = n.html + (n.img ? `<img src="${n.img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
+      document.getElementById('preview-text').innerHTML = n.html;
       document.getElementById('preview-date').innerText = n.date;
       document.getElementById('preview-modal').style.display = 'flex';
     }
@@ -1455,16 +1632,19 @@
     document.addEventListener('DOMContentLoaded', () => {
       renderNews(); 
       renderSuggestions();
+      renderAdminSuggestions();
       renderNewsByTags();
       
-      if (localStorage.getItem('news') && news.length) {
-        document.getElementById('delete-all-btn').hidden = false;
+      // Прокрутка к новости при наличии якоря в URL
+      if (window.location.hash) {
+        const newsElement = document.querySelector(window.location.hash);
+        if (newsElement) {
+          setTimeout(() => {
+            newsElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            newsElement.style.animation = 'pulse 1s';
+          }, 500);
+        }
       }
-      
-      document.addEventListener('keydown', function (e) {
-        if (e.key === "Escape" && document.getElementById('login-panel').style.display === 'block')
-          closeLoginPanel();
-      });
     });
   </script>
 </body>
