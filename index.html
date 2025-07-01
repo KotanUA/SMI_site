@@ -394,6 +394,17 @@
     border: 2px solid #444;
   }
 
+  [data-theme="dark"] #editor,
+  [data-theme="dark"] #article-editor {
+    background: #333 !important;
+    color: #f0f0f0 !important;
+    border: 2px solid #444 !important;
+  }
+
+  #editor, #article-editor {
+    color: #333;
+  }
+
   .form-section input:focus,
   .form-section textarea:focus,
   .form-section select:focus {
@@ -785,6 +796,11 @@
     background: var(--card-bg);
     box-shadow: var(--shadow-light);
     user-select: text;
+    display: none; /* Hidden by default */
+  }
+
+  .admin-visible #suggestions-list {
+    display: block; /* Visible for admins */
   }
 
   .suggestion-item {
@@ -948,6 +964,224 @@
     border: 1px solid var(--border-color);
   }
 
+  /* ARTICLE SECTION STYLES */
+  .article-form {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-light);
+  }
+
+  .article-form h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+    color: #c62828;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  [data-theme="dark"] .article-form h3 {
+    color: #ff5252;
+  }
+
+  .article-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    background: white;
+    border-radius: 12px;
+    padding: 0.8rem;
+    border: 1px solid #e0e0e0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  }
+
+  [data-theme="dark"] .article-toolbar {
+    background: #333;
+    border: 1px solid #444;
+  }
+
+  .article-toolbar button {
+    background: white;
+    border: 1px solid #e0e0e0;
+    color: #333;
+    border-radius: 8px;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  [data-theme="dark"] .article-toolbar button {
+    background: #444;
+    border: 1px solid #555;
+    color: #f0f0f0;
+  }
+
+  .article-toolbar button:hover,
+  .article-toolbar button:focus {
+    background: #c62828;
+    color: white;
+    border-color: #c62828;
+    transform: scale(1.05);
+  }
+
+  [data-theme="dark"] .article-toolbar button:hover {
+    background: #ff5252;
+  }
+
+  #article-editor {
+    min-height: 200px;
+    padding: 1.2rem;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background: white;
+    margin-bottom: 1.5rem;
+  }
+
+  .article-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .article-tag-option {
+    position: relative;
+  }
+
+  .article-tag-option input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .article-tag-option label {
+    display: block;
+    padding: 0.8rem 1.5rem;
+    background: white;
+    color: #333;
+    border: 2px solid #e0e0e0;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    user-select: none;
+  }
+
+  [data-theme="dark"] .article-tag-option label {
+    background: #333;
+    color: #f0f0f0;
+    border: 2px solid #444;
+  }
+
+  .article-tag-option input:checked + label {
+    background: #c62828;
+    color: white;
+    border-color: #c62828;
+    box-shadow: 0 4px 10px rgba(198, 40, 40, 0.2);
+  }
+
+  [data-theme="dark"] .article-tag-option input:checked + label {
+    background: #ff5252;
+    border-color: #ff5252;
+  }
+
+  .article-tag-option label:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 12px rgba(198, 40, 40, 0.15);
+  }
+
+  .pin-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-weight: 600;
+  }
+
+  .articles-list {
+    display: grid;
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .article {
+    background: white;
+    padding: 1.8rem;
+    border-left: 5px solid #4caf50;
+    border-radius: 16px;
+    box-shadow: var(--shadow-light);
+    position: relative;
+    transition: all var(--transition);
+  }
+
+  [data-theme="dark"] .article {
+    background: #333;
+    border-left: 5px solid #66bb6a;
+  }
+
+  .article.pinned {
+    border-left: 5px solid #ff9800;
+    box-shadow: 0 4px 20px rgba(255, 152, 0, 0.25);
+  }
+
+  [data-theme="dark"] .article.pinned {
+    border-left: 5px solid #ffb74d;
+  }
+
+  .article-tag {
+    font-weight: 800;
+    color: #4caf50;
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+    user-select: none;
+    letter-spacing: 0.03em;
+    background: rgba(76, 175, 80, 0.1);
+    border-radius: 50px;
+    padding: 0.5rem 1.2rem;
+    display: inline-block;
+  }
+
+  .article.pinned .article-tag {
+    color: #ff9800;
+    background: rgba(255, 152, 0, 0.1);
+  }
+
+  [data-theme="dark"] .article-tag {
+    color: #66bb6a;
+    background: rgba(102, 187, 106, 0.15);
+  }
+
+  [data-theme="dark"] .article.pinned .article-tag {
+    color: #ffb74d;
+    background: rgba(255, 183, 77, 0.15);
+  }
+
+  .article time {
+    font-size: 0.9rem;
+    color: #888;
+    font-style: italic;
+    display: block;
+    margin-top: 1.5rem;
+    user-select: none;
+  }
+
+  [data-theme="dark"] .article time {
+    color: #aaa;
+  }
+
   /* RESPONSIVE ADJUSTMENTS */
   @media (max-width: 1024px) {
     main {
@@ -1072,6 +1306,7 @@
   <aside id="sidebar">
     <button class="sidebar-btn active" onclick="showTab('news')" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
     <button class="sidebar-btn" onclick="showTab('submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
+    <button class="sidebar-btn" onclick="showTab('articles')" aria-controls="articles" aria-selected="false" role="tab" id="articles-tab-btn">📝 Статті</button>
     <button class="sidebar-btn admin-only" onclick="showTab('admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn">⚙️ Адмін</button>
   </aside>
 
@@ -1145,6 +1380,67 @@
       </div>
     </section>
 
+    <section id="articles" role="tabpanel" aria-labelledby="articles-tab-btn">
+      <h2 class="section-title">📝 Статті</h2>
+      
+      <!-- Форма для написання статті -->
+      <div class="article-form admin-only">
+        <h3>✍️ Написати статтю</h3>
+        
+        <div class="article-toolbar" id="article-toolbar">
+          <button type="button" title="Жирний (Ctrl+B)" onclick="format('bold', null, 'article')"><b>B</b></button>
+          <button type="button" title="Курсив (Ctrl+I)" onclick="format('italic', null, 'article')"><i>I</i></button>
+          <button type="button" title="Підкреслення (Ctrl+U)" onclick="format('underline', null, 'article')"><u>U</u></button>
+          <button type="button" title="Списoк" onclick="format('insertUnorderedList', null, 'article')">• Список</button>
+          <button type="button" title="Заголовок" onclick="format('formatBlock','H3', 'article')"><span style="font-weight: 900;">H</span>3</button>
+          <button type="button" title="Посилання" onclick="createLink('article')">🔗</button>
+          <button type="button" title="Вставити зображення" onclick="promptImage('article')">🖼️</button>
+          <button type="button" title="По лівому краю" onclick="format('justifyLeft', null, 'article')">◀</button>
+          <button type="button" title="По центру" onclick="format('justifyCenter', null, 'article')">⨀</button>
+          <button type="button" title="По правому краю" onclick="format('justifyRight', null, 'article')">▶</button>
+          <button type="button" title="По ширині" onclick="format('justifyFull', null, 'article')">↔</button>
+          <button type="button" title="Очистити формат" onclick="format('removeFormat', null, 'article')">✕</button>
+        </div>
+        
+        <div id="article-editor" contenteditable="true" aria-label="Редактор статті" role="textbox" spellcheck="true"></div>
+        
+        <div>
+          <h3 style="margin-bottom: 1rem;">🏷️ Виберіть теги:</h3>
+          <div class="article-tags">
+            <div class="article-tag-option">
+              <input type="checkbox" id="art-useful" name="art-tag" value="Корисне">
+              <label for="art-useful">Корисне</label>
+            </div>
+            <div class="article-tag-option">
+              <input type="checkbox" id="art-health" name="art-tag" value="Здоровя">
+              <label for="art-health">Здоровя</label>
+            </div>
+            <div class="article-tag-option">
+              <input type="checkbox" id="art-sport" name="art-tag" value="Спорт">
+              <label for="art-sport">Спорт</label>
+            </div>
+          </div>
+        </div>
+        
+        <div style="margin-top: 1.5rem;">
+          <label class="pin-checkbox">
+            <input type="checkbox" id="pin-article">
+            Закріпити статтю
+          </label>
+        </div>
+        
+        <div class="btn-group">
+          <button class="form-btn" onclick="publishArticle()">📢 Опублікувати</button>
+          <button class="form-btn" onclick="showArticlePreview()">👁️ Перегляд</button>
+        </div>
+      </div>
+      
+      <!-- Список статей -->
+      <div class="articles-list" id="articles-list" aria-live="polite" aria-relevant="additions">
+        <div class="loader" id="articles-loader"></div>
+      </div>
+    </section>
+
     <section id="admin" class="admin-section" role="tabpanel" aria-labelledby="admin-tab-btn">
       <h2 class="section-title">⚙️ Адміністрування</h2>
       
@@ -1159,6 +1455,10 @@
           <button type="button" title="Заголовок" onclick="format('formatBlock','H3')"><span style="font-weight: 900;">H</span>3</button>
           <button type="button" title="Посилання" onclick="createLink()">🔗</button>
           <button type="button" title="Вставити зображення" onclick="promptImage()">🖼️</button>
+          <button type="button" title="По лівому краю" onclick="format('justifyLeft')">◀</button>
+          <button type="button" title="По центру" onclick="format('justifyCenter')">⨀</button>
+          <button type="button" title="По правому краю" onclick="format('justifyRight')">▶</button>
+          <button type="button" title="По ширині" onclick="format('justifyFull')">↔</button>
           <button type="button" title="Очистити формат" onclick="format('removeFormat')">✕</button>
         </div>
         
@@ -1272,10 +1572,12 @@
     // Create database references
     const newsRef = ref(db, 'news');
     const suggestionsRef = ref(db, 'suggestions');
+    const articlesRef = ref(db, 'articles');
 
     // Глобальные переменные для хранения данных
     let news = [];
     let suggestions = [];
+    let articles = [];
 
     // Переключение боковой панели
     function toggleSidebar() {
@@ -1284,17 +1586,20 @@
     }
 
     // ---- RICH TEXT TOOLBAR ----
-    function format(cmd, param) {
-      document.execCommand(cmd, false, param);
-      document.getElementById('editor').focus();
+    function format(cmd, param, editorId = 'editor') {
+      const editor = document.getElementById(editorId);
+      if (editor) {
+        document.execCommand(cmd, false, param);
+        editor.focus();
+      }
     }
 
-    function createLink() {
+    function createLink(editorId = 'editor') {
       let url = prompt("Вставте посилання (URL):", "https://");
       if (url) document.execCommand("createLink", false, url.trim());
     }
 
-    function promptImage() {
+    function promptImage(editorId = 'editor') {
       let url = prompt("URL зображення:");
       if (url) document.execCommand("insertImage", false, url.trim());
     }
@@ -1303,6 +1608,12 @@
       if (e.ctrlKey && e.key.toLowerCase() === "b") { format('bold'); e.preventDefault(); }
       if (e.ctrlKey && e.key.toLowerCase() === "i") { format('italic'); e.preventDefault(); }
       if (e.ctrlKey && e.key.toLowerCase() === "u") { format('underline'); e.preventDefault(); }
+    });
+
+    document.getElementById("article-editor").addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key.toLowerCase() === "b") { format('bold', null, 'article'); e.preventDefault(); }
+      if (e.ctrlKey && e.key.toLowerCase() === "i") { format('italic', null, 'article'); e.preventDefault(); }
+      if (e.ctrlKey && e.key.toLowerCase() === "u") { format('underline', null, 'article'); e.preventDefault(); }
     });
 
     // Обработка загрузки нескольких изображений
@@ -1335,6 +1646,40 @@
       };
       
       // Последовательная обработка файлов
+      (async function() {
+        for (let i = 0; i < files.length; i++) {
+          await processFile(files[i], i);
+        }
+      })();
+    }
+
+    function handleArticleImageUpload(event) {
+      const files = event.target.files;
+      if (!files || files.length === 0) return;
+      
+      const editor = document.getElementById('article-editor');
+      const reader = new FileReader();
+      
+      const processFile = (file, index) => {
+        return new Promise((resolve) => {
+          reader.onload = function (e) {
+            const imgElem = document.createElement('img');
+            imgElem.src = e.target.result;
+            imgElem.style.maxWidth = "100%";
+            imgElem.style.borderRadius = "12px";
+            imgElem.style.marginTop = "1rem";
+            imgElem.style.display = "block";
+            editor.appendChild(imgElem);
+            
+            if (index < files.length - 1) {
+              editor.appendChild(document.createElement('br'));
+            }
+            resolve();
+          };
+          reader.readAsDataURL(file);
+        });
+      };
+      
       (async function() {
         for (let i = 0; i < files.length; i++) {
           await processFile(files[i], i);
@@ -1435,7 +1780,7 @@
       }
     };
 
-// ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
+    // ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
     function submitSuggestion() {
       let text = document.getElementById('suggested-news').value.trim();
       if (!text) { 
@@ -1468,7 +1813,7 @@
             const newSuggestionRef = push(suggestionsRef);
             await set(newSuggestionRef, {
               text,
-              images: images.length > 0 ? images : [], // Гарантируем, что images всегда массив
+              images: images.length > 0 ? images : [],
               date: formatDate(new Date())
             });
             
@@ -1484,7 +1829,7 @@
         const newSuggestionRef = push(suggestionsRef);
         set(newSuggestionRef, {
           text,
-          images: [], // Явно указываем пустой массив
+          images: [],
           date: formatDate(new Date())
         }).then(() => {
           document.getElementById('suggested-news').value = "";
@@ -1504,7 +1849,6 @@
       
       const suggestionHTML = suggestions.length
         ? suggestions.map((s, i) => {
-            // Проверяем наличие images и устанавливаем пустой массив, если undefined
             const images = s.images || [];
             return `
               <div class="suggestion-item">
@@ -1680,6 +2024,167 @@
       renderNews(news);
     }
 
+  // ---- СТАТЬИ ----
+function publishArticle() {
+    // Проверка авторизации
+    const user = auth.currentUser;
+    if (!user) {
+        showNotification("Ви не авторизовані для публікації статей", "error");
+        return;
+    }
+
+    // Проверка прав пользователя (добавьте свою логику проверки прав)
+    if (!user.emailVerified) {
+        showNotification("Недостатньо прав для публікації статей", "error");
+        return;
+    }
+
+    const selectedTags = Array.from(document.querySelectorAll('input[name="art-tag"]:checked'))
+        .map(checkbox => checkbox.value);
+    
+    if (selectedTags.length === 0) {
+        showNotification("Виберіть хоча б один тег!", "error");
+        return;
+    }
+    
+    let html = document.getElementById('article-editor').innerHTML.trim();
+    if (html.length < 10) { 
+        showNotification("Стаття занадто коротка!", "error"); 
+        return; 
+    }
+    
+    const pinned = document.getElementById('pin-article').checked;
+    const imageFile = document.getElementById('article-image-upload')?.files[0];
+    
+    // Если есть изображение, обрабатываем его
+    if (imageFile) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            const imageUrl = e.target.result;
+            
+            // Сохраняем статью с изображением
+            saveArticle({
+                tags: selectedTags,
+                html: `<div class="article-image-container"><img src="${imageUrl}" alt="Зображення статті" class="article-image"></div>${html}`,
+                pinned,
+                date: formatDate(new Date()),
+                author: user.uid
+            });
+        };
+        
+        reader.readAsDataURL(imageFile);
+    } else {
+        // Сохраняем статью без изображения
+        saveArticle({
+            tags: selectedTags,
+            html,
+            pinned,
+            date: formatDate(new Date()),
+            author: user.uid
+        });
+    }
+}
+
+function saveArticle(articleData) {
+    const newArticleRef = push(articlesRef);
+    set(newArticleRef, articleData)
+        .then(() => {
+            showNotification("Статтю опубліковано!", "success");
+            
+            // Сбрасываем форму
+            document.getElementById('article-editor').innerHTML = "";
+            document.querySelectorAll('input[name="art-tag"]').forEach(cb => cb.checked = false);
+            document.getElementById('pin-article').checked = false;
+            
+            // Сбрасываем загрузку изображения
+            if (document.getElementById('article-image-upload')) {
+                document.getElementById('article-image-upload').value = "";
+            }
+        })
+        .catch((error) => {
+            console.error("Помилка публікації статті:", error);
+            showNotification("Помилка публікації: " + error.message, "error");
+        });
+}
+
+function renderArticles(articles) {
+    const list = document.getElementById('articles-list');
+    if (!list) return;
+    
+    // Сортируем: закрепленные вверху, затем по дате (новые сначала)
+    const sortedArticles = [...articles].sort((a, b) => {
+        if (a.pinned && !b.pinned) return -1;
+        if (!a.pinned && b.pinned) return 1;
+        return new Date(b.date) - new Date(a.date);
+    });
+    
+    list.innerHTML = sortedArticles.length
+        ? sortedArticles.map(article => `
+            <div class="article ${article.pinned ? 'pinned' : ''}" id="article-${article.id}">
+                <div class="article-tag">${article.tags.join(', ')}</div>
+                <div class="news-text">${article.html}</div>
+                <time>${article.date}</time>
+                <div class="actions admin-only">
+                    <button onclick="copyArticleLink('${article.id}')">🔗 Копіювати посилання</button>
+                    <button onclick="deleteArticle('${article.id}')">🗑️ Видалити</button>
+                </div>
+            </div>
+        `).join('')
+        : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Статей ще немає.</div>';
+}
+
+function copyArticleLink(id) {
+    const url = window.location.href.split('#')[0] + `#article-${id}`;
+    navigator.clipboard.writeText(url).then(() => {
+        showNotification("Посилання скопійовано!", "success");
+    });
+}
+
+function deleteArticle(id) {
+    if (confirm('Видалити статтю?')) {
+        const articleRef = ref(db, `articles/${id}`);
+        remove(articleRef)
+            .then(() => {
+                showNotification("Статтю видалено", "success");
+            })
+            .catch((error) => {
+                showNotification("Помилка видалення: " + error.message, "error");
+            });
+    }
+}
+
+function showArticlePreview() {
+    const selectedTags = Array.from(document.querySelectorAll('input[name="art-tag"]:checked'))
+        .map(checkbox => checkbox.value);
+    
+    if (selectedTags.length === 0) {
+        showNotification("Виберіть хоча б один тег!", "error");
+        return;
+    }
+    
+    let html = document.getElementById('article-editor').innerHTML.trim();
+    const imageFile = document.getElementById('article-image-upload')?.files[0];
+    
+    if (imageFile) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imageUrl = e.target.result;
+            showArticlePreviewContent(selectedTags, `<div class="article-image-container"><img src="${imageUrl}" alt="Прев'ю зображення" class="article-image"></div>${html}`);
+        };
+        reader.readAsDataURL(imageFile);
+    } else {
+        showArticlePreviewContent(selectedTags, html);
+    }
+}
+
+function showArticlePreviewContent(selectedTags, html) {
+    document.getElementById('preview-tag').innerText = selectedTags.join(', ');
+    document.getElementById('preview-text').innerHTML = html;
+    document.getElementById('preview-date').innerText = formatDate(new Date());
+    document.getElementById('preview-modal').style.display = 'flex';
+}
+
     // ---- ПРЕДПРОСМОТР (modal) ----
     function showPreview() {
       const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
@@ -1764,7 +2269,7 @@
         document.getElementById('news-loader').style.display = 'none';
       });
       
-      // Подписка на предложения с улучшенной обработкой ошибок
+      // Подписка на предложения
       onValue(suggestionsRef, (snapshot) => {
         try {
           const suggestionsData = snapshot.val();
@@ -1788,6 +2293,20 @@
       }, (error) => {
         console.error("Ошибка загрузки предложений:", error);
         showNotification("Помилка завантаження пропозицій", "error");
+      });
+
+      // Подписка на статьи
+      onValue(articlesRef, (snapshot) => {
+        const articlesData = snapshot.val();
+        articles = articlesData ? Object.keys(articlesData).map(key => ({ 
+          id: key, 
+          ...articlesData[key]
+        })) : [];
+        renderArticles(articles);
+        document.getElementById('articles-loader').style.display = 'none';
+      }, (error) => {
+        console.error("Ошибка загрузки статей:", error);
+        document.getElementById('articles-loader').style.display = 'none';
       });
       
       // Подписка на состояние аутентификации
@@ -1851,6 +2370,10 @@
     window.createLink = createLink;
     window.promptImage = promptImage;
     window.handleImageUpload = handleImageUpload;
+    window.publishArticle = publishArticle;
+    window.deleteArticle = deleteArticle;
+    window.copyArticleLink = copyArticleLink;
+    window.showArticlePreview = showArticlePreview;
   </script>
 </body>
 </html>
