@@ -1037,7 +1037,7 @@
 <body>
   <header>
     <button id="menu-toggle" onclick="toggleSidebar()" aria-label="Відкрити меню">☰</button>
-    <span>ТСНС Новини</span>
+    <span>ЗМІ 1+1 | UKRAINE GTA 01</span>
     <div class="header-controls">
       <button id="theme-toggle-btn" class="header-btn" title="Змінити тему">🌗</button>
       <button id="login-btn" class="header-btn admin-only" onclick="showLoginPanel()" title="Вхід для копірайтера">🔑</button>
@@ -1412,7 +1412,7 @@
       }
     };
 
-    // ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
+   // ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
     function submitSuggestion() {
       let text = document.getElementById('suggested-news').value.trim();
       if (!text) { 
@@ -1437,22 +1437,25 @@
         };
         
         (async function() {
-          for (let i = 0; i < files.length; i++) {
-            await processFile(files[i], i);
-          }
-          
-          const newSuggestionRef = push(suggestionsRef);
-          set(newSuggestionRef, {
-            text,
-            images,
-            date: formatDate(new Date())
-          }).then(() => {
+          try {
+            for (let i = 0; i < files.length; i++) {
+              await processFile(files[i], i);
+            }
+            
+            const newSuggestionRef = push(suggestionsRef);
+            await set(newSuggestionRef, {
+              text,
+              images,
+              date: formatDate(new Date())
+            });
+            
             document.getElementById('suggested-news').value = "";
             document.getElementById('suggestion-image').value = "";
             showNotification("Дякуємо за пропозицію!", "success");
-          }).catch((error) => {
+          } catch (error) {
+            console.error("Помилка збереження пропозиції:", error);
             showNotification("Помилка збереження: " + error.message, "error");
-          });
+          }
         })();
       } else {
         const newSuggestionRef = push(suggestionsRef);
@@ -1464,9 +1467,38 @@
           document.getElementById('suggested-news').value = "";
           showNotification("Дякуємо за пропозицію!", "success");
         }).catch((error) => {
+          console.error("Помилка збереження пропозиції:", error);
           showNotification("Помилка збереження: " + error.message, "error");
         });
       }
+    }
+
+    function renderSuggestions(suggestions) {
+      const list = document.getElementById('suggestions-list');
+      const adminList = document.getElementById('suggestions-list-admin');
+      
+      if (!list && !adminList) return;
+      
+      const suggestionHTML = suggestions.length
+        ? suggestions.map((s, i) => `
+          <div class="suggestion-item">
+            <div>${s.text}</div>
+            ${s.images.length ? `
+              <div class="suggestion-images">
+                ${s.images.map(img => `<img src="${img}" class="suggestion-image" alt="Пропозиція">`).join('')}
+              </div>
+            ` : ''}
+            <div class="suggestion-date">${s.date}</div>
+            <div class="suggestion-actions admin-only">
+              <button onclick="publishSuggestion('${s.id}')">📢 Публікувати</button>
+              <button onclick="deleteSuggestion('${s.id}')">🗑️ Видалити</button>
+            </div>
+          </div>
+        `).join('')
+        : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Немає запропонованих новин.</div>';
+      
+      if (list) list.innerHTML = suggestionHTML;
+      if (adminList) adminList.innerHTML = suggestionHTML;
     }
 
     function renderSuggestions(suggestions) {
