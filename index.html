@@ -1016,24 +1016,40 @@
   .admin-visible .admin-inline {
     display: inline-flex;
   }
+  
+  /* Loading spinner */
+  .loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #c62828;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 2rem auto;
+  }
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
   </style>
 </head>
 
 <body>
   <header>
     <button id="menu-toggle" onclick="toggleSidebar()" aria-label="Відкрити меню">☰</button>
-    <span>ТСН Новини</span>
+    <span>ТСНС Новини</span>
     <div class="header-controls">
       <button id="theme-toggle-btn" class="header-btn" title="Змінити тему">🌗</button>
       <button id="login-btn" class="header-btn" onclick="showLoginPanel()" title="Вхід для копірайтера">🔑</button>
       <button id="notification-toggle" class="header-btn" title="Увімкнути/вимкнути повідомлення">🔔</button>
+      <button id="logout-btn" class="header-btn admin-only" onclick="logoutWriter()" title="Вийти">🚪</button>
     </div>
   </header>
 
   <aside id="sidebar">
-    <button class="sidebar-btn active" onclick="showTab(event, 'news')" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
-    <button class="sidebar-btn" onclick="showTab(event, 'submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
-    <button class="sidebar-btn admin-only" onclick="showTab(event, 'admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn">⚙️ Адмін</button>
+    <button class="sidebar-btn active" onclick="showTab('news')" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
+    <button class="sidebar-btn" onclick="showTab('submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
+    <button class="sidebar-btn admin-only" onclick="showTab('admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn">⚙️ Адмін</button>
   </aside>
 
   <main>
@@ -1082,7 +1098,9 @@
         </div>
       </div>
       
-      <div id="news-feed" aria-live="polite" aria-relevant="additions"></div>
+      <div id="news-feed" aria-live="polite" aria-relevant="additions">
+        <div class="loader" id="news-loader"></div>
+      </div>
       
       <button class="form-btn admin-only" style="background: #8e0000; margin-top: 2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини">
         🗑️ Видалити всі новини
@@ -1099,7 +1117,9 @@
         <button class="form-btn" onclick="submitSuggestion()">Надіслати пропозицію</button>
       </div>
       
-      <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
+      <div id="suggestions-list" aria-live="polite" aria-relevant="additions">
+        <div class="loader" id="suggestions-loader"></div>
+      </div>
     </section>
 
     <section id="admin" class="admin-section" role="tabpanel" aria-labelledby="admin-tab-btn">
@@ -1174,7 +1194,9 @@
       
       <div class="form-section">
         <h3>📨 Запропоновані новини</h3>
-        <div id="suggestions-list-admin" aria-live="polite" aria-relevant="additions"></div>
+        <div id="suggestions-list-admin" aria-live="polite" aria-relevant="additions">
+          <div class="loader" id="admin-suggestions-loader"></div>
+        </div>
       </div>
     </section>
   </main>
@@ -1190,7 +1212,8 @@
 
   <div id="login-panel" role="dialog" aria-modal="true" aria-labelledby="login-title">
     <h3 id="login-title">🔒 Вхід копірайтера</h3>
-    <input id="writer-pass" type="password" placeholder="Введіть пароль" autocomplete="current-password" aria-label="Пароль копірайтера" />
+    <input id="writer-email" type="email" placeholder="Email" autocomplete="email" aria-label="Email копірайтера" style="margin-bottom: 1rem;" />
+    <input id="writer-pass" type="password" placeholder="Пароль" autocomplete="current-password" aria-label="Пароль копірайтера" />
     <div class="btns">
       <button onclick="loginWriter()">Увійти</button>
       <button onclick="closeLoginPanel()">Відміна</button>
@@ -1199,7 +1222,38 @@
 
   <div id="notifications-container" aria-live="polite" aria-atomic="true"></div>
 
-  <script>
+  <!-- Firebase SDK -->
+  <script type="module">
+    // Import Firebase modules
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-app.js";
+    import { getDatabase, ref, set, push, onValue, remove, update } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-database.js";
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.1/firebase-auth.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyATgwtUGOdNS18pKclEGSfmjFxTsjk0n88",
+      authDomain: "titproject-19bfd.firebaseapp.com",
+      databaseURL: "https://titproject-19bfd-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "titproject-19bfd",
+      storageBucket: "titproject-19bfd.firebasestorage.app",
+      messagingSenderId: "374156588962",
+      appId: "1:374156588962:web:181084981068a6619aa4fb",
+      measurementId: "G-DP3KFTXB4Q"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+    const auth = getAuth(app);
+
+    // Create database references
+    const newsRef = ref(db, 'news');
+    const suggestionsRef = ref(db, 'suggestions');
+
+    // Глобальные переменные для хранения данных
+    let news = [];
+    let suggestions = [];
+
     // Переключение боковой панели
     function toggleSidebar() {
       const sidebar = document.getElementById('sidebar');
@@ -1266,30 +1320,32 @@
     }
 
     // ---- Табы/панели ----
-  function showTab(e, tab) {
-    // Снимаем активный класс со всех кнопок
-    for (const btn of document.querySelectorAll('aside button')) {
-      btn.classList.remove('active');
-    }
+    function showTab(tabId) {
+      // Снимаем активный класс со всех кнопок
+      document.querySelectorAll('aside button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      // Добавляем активный класс текущей кнопке
+      document.getElementById(`${tabId}-tab-btn`).classList.add('active');
+      
+      // Скрываем все секции
+      document.querySelectorAll('main>section').forEach(section => {
+        section.classList.remove('active');
+      });
     
-    // Добавляем активный класс текущей кнопке
-    e.currentTarget.classList.add('active');
-    
-    // Скрываем все секции
-    for (const s of document.querySelectorAll('main>section')) {
-      s.classList.remove('active');
+      // Показываем выбранную секцию
+      document.getElementById(tabId).classList.add('active');
     }
-  
-  // Показываем выбранную секцию
-  document.getElementById(tab).classList.add('active');
-}
 
     function showLoginPanel() {
       document.getElementById('login-panel').style.display = 'block';
-      document.getElementById('writer-pass').focus();
+      document.getElementById('writer-email').focus();
     }
 
-    function closeLoginPanel() { document.getElementById('login-panel').style.display = 'none'; }
+    function closeLoginPanel() { 
+      document.getElementById('login-panel').style.display = 'none'; 
+    }
 
     // Функция форматирования даты в 24-часовом формате
     function formatDate(date) {
@@ -1303,15 +1359,65 @@
       });
     }
 
-    // Сохранение состояния входа
-    function loginWriter() {
-      let pass = document.getElementById('writer-pass').value.trim();
-      if (pass === "admin") {
-        showNotification("Авторизовано 👑", "success");
-        localStorage.setItem('isWriterLoggedIn', 'true');
-        toggleAdminUI(true);
+    // Вход администратора
+  async function loginWriter() {
+    const email = document.getElementById('writer-email').value.trim();
+    const password = document.getElementById('writer-pass').value.trim();
+
+    if (!email || !password) {
+      showNotification("Введіть email та пароль", "error");
+      return;
+    }
+
+    try {
+      // 1. Пробуем войти
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      
+      // 2. Проверяем, подтвержден ли email (если требуется)
+      if (userCredential.user.emailVerified || true) { // Удалите || true для реальной проверки
+        showNotification("Успішний вхід!", "success");
         closeLoginPanel();
-      } else showNotification("Невірний пароль!", "error");
+        toggleAdminUI(true);
+      } else {
+        await sendEmailVerification(userCredential.user);
+        showNotification("Підтвердіть email! Лист відправлено.", "info");
+        await signOut(auth);
+      }
+    } catch (error) {
+      console.error("Full error object:", error);
+      
+      const errorMap = {
+        'auth/invalid-credential': 'Невірні облікові дані',
+        'auth/user-not-found': 'Користувача не знайдено',
+        'auth/wrong-password': 'Невірний пароль',
+        'auth/invalid-email': 'Невірний формат email',
+        'auth/user-disabled': 'Акаунт вимкнений',
+        'auth/too-many-requests': 'Забагато спроб. Спробуйте пізніше'
+      };
+
+      const errorMessage = errorMap[error.code] || `Помилка входу: ${error.message}`;
+      showNotification(errorMessage, "error");
+      
+      // Дополнительная диагностика
+      if (error.code === 'auth/invalid-credential') {
+        console.warn("Диагностика:");
+        console.log("Проверьте:", {
+          emailCorrect: email.includes('@'),
+          passwordLength: password.length >= 6,
+          authConfig: auth.config,
+          currentUser: auth.currentUser
+        });
+      }
+    }
+  }
+
+    // Выход администратора
+    function logoutWriter() {
+      signOut(auth).then(() => {
+        showNotification("Ви вийшли з системи", "info");
+      }).catch((error) => {
+        showNotification("Помилка виходу: " + error.message, "error");
+      });
     }
 
     // Переключение UI для администратора
@@ -1320,20 +1426,27 @@
       if (loggedIn) {
         document.body.classList.add('admin-visible');
         document.getElementById("admin-tab-btn").style.display = "";
+        document.getElementById("logout-btn").style.display = "flex";
       } else {
         document.body.classList.remove('admin-visible');
         document.getElementById("admin-tab-btn").style.display = "none";
+        document.getElementById("logout-btn").style.display = "none";
       }
     }
 
-    window.onclick = function (e) { if (e.target === document.getElementById('login-panel')) closeLoginPanel(); };
+    window.onclick = function (e) { 
+      if (e.target === document.getElementById('login-panel')) {
+        closeLoginPanel();
+      }
+    };
 
     // ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
-    let suggestions = JSON.parse(localStorage.getItem('suggestions') || "[]");
-
     function submitSuggestion() {
       let text = document.getElementById('suggested-news').value.trim();
-      if (!text) { showNotification("Введіть пропозицію!", "error"); return; }
+      if (!text) { 
+        showNotification("Введіть пропозицію!", "error"); 
+        return; 
+      }
       
       // Обработка изображений
       const files = document.getElementById('suggestion-image').files;
@@ -1357,28 +1470,44 @@
             await processFile(files[i], i);
           }
           
-          // Сохранение предложения с изображениями
-          suggestions.push({ text, images, date: formatDate(new Date()) });
-          localStorage.setItem('suggestions', JSON.stringify(suggestions));
-          document.getElementById('suggested-news').value = "";
-          document.getElementById('suggestion-image').value = "";
-          showNotification("Дякуємо за пропозицію!", "success");
-          renderSuggestions();
-          renderAdminSuggestions();
+          // Сохранение предложения в Firebase
+          const newSuggestionRef = push(suggestionsRef);
+          set(newSuggestionRef, {
+            text,
+            images,
+            date: formatDate(new Date())
+          })
+          .then(() => {
+            document.getElementById('suggested-news').value = "";
+            document.getElementById('suggestion-image').value = "";
+            showNotification("Дякуємо за пропозицію!", "success");
+          })
+          .catch((error) => {
+            showNotification("Помилка збереження: " + error.message, "error");
+          });
         })();
       } else {
         // Сохранение предложения без изображений
-        suggestions.push({ text, images: [], date: formatDate(new Date()) });
-        localStorage.setItem('suggestions', JSON.stringify(suggestions));
-        document.getElementById('suggested-news').value = "";
-        showNotification("Дякуємо за пропозицію!", "success");
-        renderSuggestions();
-        renderAdminSuggestions();
+        const newSuggestionRef = push(suggestionsRef);
+        set(newSuggestionRef, {
+          text,
+          images: [],
+          date: formatDate(new Date())
+        })
+        .then(() => {
+          document.getElementById('suggested-news').value = "";
+          showNotification("Дякуємо за пропозицію!", "success");
+        })
+        .catch((error) => {
+          showNotification("Помилка збереження: " + error.message, "error");
+        });
       }
     }
 
-    function renderSuggestions() {
+    function renderSuggestions(suggestions) {
       let list = document.getElementById('suggestions-list');
+      if (!list) return;
+      
       list.innerHTML = suggestions.length
         ? suggestions.map((s, i) => `
           <div class="suggestion-item">
@@ -1390,15 +1519,15 @@
             ` : ''}
             <div class="suggestion-date">${s.date}</div>
             <div class="suggestion-actions admin-only">
-              <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
-              <button onclick="deleteSuggestion(${i})">🗑️ Видалити</button>
+              <button onclick="publishSuggestion('${s.id}')">📢 Публікувати</button>
+              <button onclick="deleteSuggestion('${s.id}')">🗑️ Видалити</button>
             </div>
           </div>
         `).join('')
         : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Немає запропонованих новин.</div>';
     }
     
-    function renderAdminSuggestions() {
+    function renderAdminSuggestions(suggestions) {
       let list = document.getElementById('suggestions-list-admin');
       if (!list) return;
       
@@ -1413,43 +1542,56 @@
             ` : ''}
             <div class="suggestion-date">${s.date}</div>
             <div class="suggestion-actions">
-              <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
-              <button onclick="deleteSuggestion(${i})">🗑️ Видалити</button>
+              <button onclick="publishSuggestion('${s.id}')">📢 Публікувати</button>
+              <button onclick="deleteSuggestion('${s.id}')">🗑️ Видалити</button>
             </div>
           </div>
         `).join('')
         : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Немає запропонованих новин.</div>';
     }
 
-    function deleteSuggestion(i) {
+    function deleteSuggestion(id) {
       if (confirm('Видалити цю пропозицію?')) {
-        suggestions.splice(i, 1);
-        localStorage.setItem('suggestions', JSON.stringify(suggestions));
-        renderSuggestions();
-        renderAdminSuggestions();
+        const suggestionRef = ref(db, `suggestions/${id}`);
+        remove(suggestionRef)
+          .then(() => {
+            showNotification("Пропозицію видалено", "success");
+          })
+          .catch((error) => {
+            showNotification("Помилка видалення: " + error.message, "error");
+          });
       }
     }
 
-    function publishSuggestion(i) {
-      let s = suggestions[i];
-      document.getElementById('editor').innerHTML = s.text;
+    function publishSuggestion(id) {
+      const suggestionRef = ref(db, `suggestions/${id}`);
       
-      // Вставляем изображения из предложения
-      if (s.images && s.images.length > 0) {
-        s.images.forEach(img => {
-          const imgElem = document.createElement('img');
-          imgElem.src = img;
-          imgElem.style.maxWidth = "100%";
-          imgElem.style.borderRadius = "12px";
-          imgElem.style.marginTop = "1rem";
-          imgElem.style.display = "block";
-          document.getElementById('editor').appendChild(imgElem);
-          document.getElementById('editor').appendChild(document.createElement('br'));
-        });
-      }
-      
-      showTab({ currentTarget: document.getElementById('admin-tab-btn') }, 'admin');
-      showNotification("Пропозицію завантажено в редактор", "info");
+      onValue(suggestionRef, (snapshot) => {
+        const s = snapshot.val();
+        if (s) {
+          document.getElementById('editor').innerHTML = s.text;
+          
+          // Вставляем изображения из предложения
+          if (s.images && s.images.length > 0) {
+            s.images.forEach(img => {
+              const imgElem = document.createElement('img');
+              imgElem.src = img;
+              imgElem.style.maxWidth = "100%";
+              imgElem.style.borderRadius = "12px";
+              imgElem.style.marginTop = "1rem";
+              imgElem.style.display = "block";
+              document.getElementById('editor').appendChild(imgElem);
+              document.getElementById('editor').appendChild(document.createElement('br'));
+            });
+          }
+          
+          // Удаляем предложение после публикации
+          remove(suggestionRef);
+          
+          showTab('admin');
+          showNotification("Пропозицію завантажено в редактор", "info");
+        }
+      }, { onlyOnce: true });
     }
 
     // --- ТЕМА Toggle ---
@@ -1461,19 +1603,7 @@
       showNotification(`Тема змінена на ${now === 'dark' ? 'темну' : 'світлу'}`, "info");
     };
 
-    (() => {
-      let saved = localStorage.getItem('theme');
-      if (saved) document.documentElement.setAttribute('data-theme', saved);
-      
-      // Проверка сохраненного входа
-      if (localStorage.getItem('isWriterLoggedIn') === 'true') {
-        toggleAdminUI(true);
-      }
-    })();
-
     // ---- ПУБЛИКАЦИЯ НОВОСТЕЙ (ADMIN) ----
-    let news = JSON.parse(localStorage.getItem('news') || '[]');
-
     function publishNews() {
       // Получаем выбранные теги
       const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
@@ -1490,27 +1620,29 @@
         return; 
       }
       
-      let item = {
+      const newNewsRef = push(newsRef);
+      set(newNewsRef, {
         tags: selectedTags,
         html,
         date: formatDate(new Date())
-      };
-      
-      news.unshift(item);
-      localStorage.setItem('news', JSON.stringify(news));
-      showNotification("Новину опубліковано!", "success");
-      
-      // Сброс формы
-      document.getElementById('editor').innerHTML = "";
-      document.getElementById('image-upload').value = "";
-      document.querySelectorAll('input[name="pub-tag"]').forEach(cb => cb.checked = false);
-      
-      // Переход на вкладку новостей
-      showTab({ currentTarget: document.getElementById('news-tab-btn') }, 'news');
-      renderNews();
+      })
+      .then(() => {
+        showNotification("Новину опубліковано!", "success");
+        
+        // Сброс формы
+        document.getElementById('editor').innerHTML = "";
+        document.getElementById('image-upload').value = "";
+        document.querySelectorAll('input[name="pub-tag"]').forEach(cb => cb.checked = false);
+        
+        // Переход на вкладку новостей
+        showTab('news');
+      })
+      .catch((error) => {
+        showNotification("Помилка публікації: " + error.message, "error");
+      });
     }
 
-    function renderNews(list = news) {
+    function renderNews(news) {
       let feed = document.getElementById('news-feed');
       if (!feed) return;
       
@@ -1520,54 +1652,63 @@
       
       // Если выбран тег "Все" или ничего не выбрано, показываем все новости
       const filteredNews = (selectedTags.includes('all') || selectedTags.length === 0) 
-        ? list 
-        : list.filter(n => n.tags.some(tag => selectedTags.includes(tag)));
+        ? news 
+        : news.filter(n => n.tags.some(tag => selectedTags.includes(tag)));
       
       feed.innerHTML = filteredNews.length
         ? filteredNews.map((n, i) => `
-          <div class="news" id="news-${i}">
+          <div class="news" id="news-${n.id}">
             <div class="news-tag">${n.tags.map(tag => tag).join(', ')}</div>
             <div class="news-text">${n.html}</div>
             <time>${n.date ?? ""}</time>
             <div class="actions">
-              <button onclick="copyNewsLink(${i})">🔗 Копіювати посилання</button>
-              <button class="admin-only" onclick="showPreviewFromFeed(${i})">👁️ Перегляд</button>
-              <button class="admin-only" onclick="deleteNews(${i})">🗑️ Видалити</button>
+              <button onclick="copyNewsLink('${n.id}')">🔗 Копіювати посилання</button>
+              <button class="admin-only" onclick="showPreviewFromFeed('${n.id}')">👁️ Перегляд</button>
+              <button class="admin-only" onclick="deleteNews('${n.id}')">🗑️ Видалити</button>
             </div>
           </div>
         `).join('')
         : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Новин за обраними тегами не знайдено.</div>';
       
-      document.getElementById('delete-all-btn').hidden = !list.length;
+      document.getElementById('delete-all-btn').hidden = !filteredNews.length;
     }
     
     // Копирование ссылки на новость
-    function copyNewsLink(index) {
-      const url = window.location.href.split('#')[0] + `#news-${index}`;
+    function copyNewsLink(id) {
+      const url = window.location.href.split('#')[0] + `#news-${id}`;
       navigator.clipboard.writeText(url).then(() => {
         showNotification("Посилання скопійовано!", "success");
       });
     }
 
-    function deleteNews(i) {
+    function deleteNews(id) {
       if (confirm('Видалити новину?')) {
-        news.splice(i, 1);
-        localStorage.setItem('news', JSON.stringify(news));
-        renderNews();
+        const newsRef = ref(db, `news/${id}`);
+        remove(newsRef)
+          .then(() => {
+            showNotification("Новину видалено", "success");
+          })
+          .catch((error) => {
+            showNotification("Помилка видалення: " + error.message, "error");
+          });
       }
     }
 
     function deleteAllNews() {
       if (confirm('Видалити всі новини безповоротно?')) {
-        news = []; 
-        localStorage.removeItem('news'); 
-        renderNews();
+        remove(newsRef)
+          .then(() => {
+            showNotification("Всі новини видалено", "success");
+          })
+          .catch((error) => {
+            showNotification("Помилка видалення: " + error.message, "error");
+          });
       }
     }
 
     // --- Теги фильтр ---
     function renderNewsByTags() {
-      renderNews();
+      renderNews(news);
     }
 
     // ---- ПРЕДПРОСМОТР (modal) ----
@@ -1589,12 +1730,17 @@
       document.getElementById('preview-modal').style.display = 'flex';
     }
 
-    function showPreviewFromFeed(i) {
-      let n = news[i];
-      document.getElementById('preview-tag').innerText = n.tags.join(', ');
-      document.getElementById('preview-text').innerHTML = n.html;
-      document.getElementById('preview-date').innerText = n.date;
-      document.getElementById('preview-modal').style.display = 'flex';
+    function showPreviewFromFeed(id) {
+      const newsItemRef = ref(db, `news/${id}`);
+      onValue(newsItemRef, (snapshot) => {
+        const n = snapshot.val();
+        if (n) {
+          document.getElementById('preview-tag').innerText = n.tags.join(', ');
+          document.getElementById('preview-text').innerHTML = n.html;
+          document.getElementById('preview-date').innerText = n.date;
+          document.getElementById('preview-modal').style.display = 'flex';
+        }
+      }, { onlyOnce: true });
     }
 
     function hidePreview(e) {
@@ -1629,19 +1775,40 @@
       }
     };
 
-    (() => {
+    // ---- ИНИЦИАЛИЗАЦИЯ (загрузка при старте) ----
+    document.addEventListener('DOMContentLoaded', () => {
+      // Загрузка темы
+      let savedTheme = localStorage.getItem('theme');
+      if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+      
+      // Подписка на новости
+      onValue(newsRef, (snapshot) => {
+        const newsData = snapshot.val();
+        news = newsData ? Object.keys(newsData).map(key => ({ id: key, ...newsData[key] })).reverse() : [];
+        renderNews(news);
+        document.getElementById('news-loader').style.display = 'none';
+      });
+      
+      // Подписка на предложения
+      onValue(suggestionsRef, (snapshot) => {
+        const suggestionsData = snapshot.val();
+        suggestions = suggestionsData ? Object.keys(suggestionsData).map(key => ({ id: key, ...suggestionsData[key] })) : [];
+        renderSuggestions(suggestions);
+        renderAdminSuggestions(suggestions);
+        document.getElementById('suggestions-loader').style.display = 'none';
+        document.getElementById('admin-suggestions-loader').style.display = 'none';
+      });
+      
+      // Подписка на состояние аутентификации
+      onAuthStateChanged(auth, (user) => {
+        toggleAdminUI(!!user);
+      });
+      
+      // Проверка сохраненного состояния уведомлений
       if (localStorage.getItem('notifications') === '1') {
         document.getElementById('notification-toggle').classList.add('active');
         document.getElementById('notification-toggle').innerHTML = '🔕';
       }
-    })();
-
-    // ---- ИНИЦИАЛИЗАЦИЯ (загрузка при старте) ----
-    document.addEventListener('DOMContentLoaded', () => {
-      renderNews(); 
-      renderSuggestions();
-      renderAdminSuggestions();
-      renderNewsByTags();
       
       // Прокрутка к новости при наличии якоря в URL
       if (window.location.hash) {
@@ -1654,6 +1821,29 @@
         }
       }
     });
+
+    // Сделаем функции глобальными для работы из HTML
+    window.toggleSidebar = toggleSidebar;
+    window.showTab = showTab;
+    window.showLoginPanel = showLoginPanel;
+    window.closeLoginPanel = closeLoginPanel;
+    window.loginWriter = loginWriter;
+    window.logoutWriter = logoutWriter;
+    window.submitSuggestion = submitSuggestion;
+    window.publishSuggestion = publishSuggestion;
+    window.deleteSuggestion = deleteSuggestion;
+    window.publishNews = publishNews;
+    window.deleteNews = deleteNews;
+    window.deleteAllNews = deleteAllNews;
+    window.renderNewsByTags = renderNewsByTags;
+    window.showPreview = showPreview;
+    window.showPreviewFromFeed = showPreviewFromFeed;
+    window.hidePreview = hidePreview;
+    window.copyNewsLink = copyNewsLink;
+    window.format = format;
+    window.createLink = createLink;
+    window.promptImage = promptImage;
+    window.handleImageUpload = handleImageUpload;
   </script>
 </body>
 
