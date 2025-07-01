@@ -7,43 +7,43 @@
   <title>ТСН Новини</title>
   <style>
     :root {
-      --bg-color: #ffebee; /* Цвет фона */
-      --text-color: #b71c1c; /* Цвет текста */
-      --accent-color: #c62828; /* Основной акцент */
-      --accent-color-hover: #8e0000; /* Акцент при наведении */
-      --success-color: #4caf50; /* Цвет успеха */
-      --info-color: #2196f3; /* Цвет информации */
-      --card-bg: #ffe0e0; /* Цвет карточек */
-      --card-bg-blur: rgba(255, 224, 224, 0.9); /* Цвет подложки карточек */
-      --border-color: #e57373; /* Цвет границ элементов */
-      --header-height: 60px; /* Высота хедера */
-      --sidebar-width: 220px; /* Ширина боковой панели */
+      --bg-color: #ffffff; /* Белый фон */
+      --text-color: #333333; /* Тёмно-серый текст */
+      --accent-color: #c62828; /* Красный акцент */
+      --accent-color-hover: #8e0000; /* Темно-красный при наведении */
+      --success-color: #4caf50; /* Зелёный для успеха */
+      --info-color: #2196f3; /* Синий для информации */
+      --card-bg: #f9f9f9; /* Светлый фон карточек */
+      --card-bg-blur: rgba(255, 255, 255, 0.9); /* Полупрозрачный белый */
+      --border-color: #e0e0e0; /* Светло-серая граница */
+      --header-height: 70px; /* Высота хедера */
+      --sidebar-width: 240px; /* Ширина боковой панели */
       --font-primary: 'Segoe UI', 'Nunito', Tahoma, Geneva, Verdana, sans-serif; /* Шрифт */
-      --shadow-light: 0 2px 24px 6px rgba(224, 68, 68, 0.16); /* Легкая тень */
-      --shadow-hover: 0 12px 32px 2px rgba(244, 67, 54, 0.23); /* Тень при наведении */
-      --glass-blur: blur(24px); /* Эффект размытия фона */
-      --transition: 0.24s cubic-bezier(0.4, 0, 0.2, 1); /* Эффект перехода */
-      --gradient: linear-gradient(135deg, #c62828 0%, #b71c1c 100%); /* Градиент фона */
-      --sidebar-shadow: 0 8px 32px rgba(150, 10, 10, 0.18); /* Тень боковой панели */
-      --modal-bg: rgba(100, 20, 20, 0.41); /* Цвет модального фона */
-      --blur: blur(16px); /* Эффект размытия */
+      --shadow-light: 0 4px 12px rgba(198, 40, 40, 0.1); /* Лёгкая тень */
+      --shadow-hover: 0 8px 24px rgba(198, 40, 40, 0.15); /* Тень при наведении */
+      --glass-blur: blur(16px); /* Эффект размытия */
+      --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Эффект перехода */
+      --gradient: linear-gradient(135deg, #ffffff 0%, #ffecec 100%); /* Градиент фона */
+      --sidebar-shadow: 0 8px 32px rgba(150, 10, 10, 0.08); /* Тень боковой панели */
+      --modal-bg: rgba(0, 0, 0, 0.5); /* Цвет модального фона */
+      --blur: blur(12px); /* Эффект размытия */
     }
 
     [data-theme="dark"] {
-      --bg-color: #4a0000; /* Цвет фона для темной темы */
-      --text-color: #ffffff; /* Цвет текста для темной темы */
-      --accent-color: #ff5252; /* Основной акцент для темной темы */
-      --accent-color-hover: #ff1a1a; /* Акцент при наведении для темной темы */
-      --success-color: #4caf50; /* Цвет успеха для темной темы */
-      --info-color: #2196f3; /* Цвет информации для темной темы */
-      --card-bg: #2a0000; /* Цвет карточек для темной темы */
-      --card-bg-blur: rgba(60, 0, 0, 0.8); /* Цвет подложки карточек для темной темы */
-      --border-color: #b71c1c; /* Цвет границ для темной темы */
-      --shadow-light: 0 2px 24px 6px rgba(150, 0, 0, 0.25); /* Легкая тень для темной темы */
-      --shadow-hover: 0 12px 32px rgba(244, 83, 83, 0.27); /* Тень при наведении для темной темы */
-      --sidebar-shadow: 0 8px 32px rgba(65, 0, 0, 0.33); /* Тень боковой панели для темной темы */
-      --gradient: linear-gradient(135deg, #8e0000 0%, #4a0000 100%); /* Градиент фона для темной темы */
-      --modal-bg: rgba(26, 0, 0, 0.78); /* Цвет модального фона для темной темы */
+      --bg-color: #1a1a1a; /* Тёмный фон */
+      --text-color: #f0f0f0; /* Светлый текст */
+      --accent-color: #ff5252; /* Светло-красный акцент */
+      --accent-color-hover: #ff1a1a; /* Ярко-красный при наведении */
+      --success-color: #66bb6a; /* Светло-зелёный */
+      --info-color: #42a5f5; /* Светло-синий */
+      --card-bg: #2a2a2a; /* Тёмный фон карточек */
+      --card-bg-blur: rgba(40, 40, 40, 0.8); /* Полупрозрачный тёмный */
+      --border-color: #444444; /* Тёмная граница */
+      --shadow-light: 0 4px 12px rgba(0, 0, 0, 0.25); /* Тень для тёмной темы */
+      --shadow-hover: 0 8px 24px rgba(255, 82, 82, 0.25); /* Тень при наведении */
+      --gradient: linear-gradient(135deg, #1a1a1a 0%, #2a0a0a 100%); /* Градиент для тёмной темы */
+      --sidebar-shadow: 0 8px 32px rgba(0, 0, 0, 0.35); /* Тень боковой панели */
+      --modal-bg: rgba(0, 0, 0, 0.7); /* Тёмный модальный фон */
     }
 
     * {
@@ -64,7 +64,7 @@
       overflow-x: hidden;
       display: flex;
       flex-direction: column;
-      line-height: 1.5;
+      line-height: 1.6;
     }
 
     /* HEADER STYLES */
@@ -74,96 +74,109 @@
       left: 0;
       right: 0;
       height: var(--header-height);
-      background: var(--gradient);
-      color: #fff;
+      background: white;
+      color: #c62828;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 1.5rem;
-      font-weight: 900;
-      font-size: 1.5rem;
+      padding: 0 2rem;
+      font-weight: 800;
+      font-size: 1.8rem;
       letter-spacing: 0.01em;
       user-select: none;
-      box-shadow: 0 3px 32px rgba(150, 8, 8, 0.28);
-      z-index: 2003;
-      backdrop-filter: var(--glass-blur);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 2000;
+      border-bottom: 3px solid #c62828;
+    }
+
+    [data-theme="dark"] header {
+      background: #222;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      border-bottom: 3px solid #ff5252;
     }
 
     .header-controls {
       display: flex;
-      gap: 0.8rem;
+      gap: 1rem;
       align-items: center;
     }
 
     #menu-toggle {
       cursor: pointer;
-      font-size: 1.5rem;
-      background: var(--card-bg-blur);
-      color: var(--text-color);
+      font-size: 1.8rem;
+      background: transparent;
+      color: var(--accent-color);
       padding: 0.5rem;
       border-radius: 8px;
-      border: 1px solid var(--border-color);
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 40px;
-      height: 40px;
+      width: 45px;
+      height: 45px;
       transition: all var(--transition);
     }
 
     #menu-toggle:hover {
-      background: var(--accent-color);
-      color: #fff;
-      transform: scale(1.05);
+      background: rgba(198, 40, 40, 0.1);
     }
 
     .header-btn {
-      background: var(--card-bg-blur);
-      color: var(--text-color);
-      border: 2px solid var(--border-color);
+      background: white;
+      color: #c62828;
+      border: 2px solid #c62828;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 1rem;
       border-radius: 10px;
-      padding: 0.4rem 1rem;
+      padding: 0.5rem 1.2rem;
       cursor: pointer;
       transition: all var(--transition);
-      box-shadow: 0 2px 10px rgba(100, 0, 0, 0.19);
+      box-shadow: 0 2px 6px rgba(198, 40, 40, 0.1);
       line-height: 1.35;
-      backdrop-filter: var(--blur);
-      will-change: background, color, box-shadow, border;
       display: flex;
       align-items: center;
-      gap: 0.4rem;
+      gap: 0.5rem;
+    }
+
+    [data-theme="dark"] .header-btn {
+      background: #333;
+      color: #ff5252;
+      border: 2px solid #ff5252;
     }
 
     .header-btn:hover,
     .header-btn.active {
-      background: var(--accent-color);
+      background: #c62828;
       color: #fff;
-      border-color: #fff;
-      box-shadow: 0 4px 16px rgba(244, 67, 54, 0.35);
+      transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] .header-btn:hover {
+      background: #ff5252;
     }
 
     /* SIDEBAR STYLES */
     #sidebar {
       width: var(--sidebar-width);
-      min-width: 175px;
-      background: var(--card-bg-blur);
-      border-left: 1.5px solid var(--border-color);
+      min-width: 200px;
+      background: white;
+      border-left: 1px solid #e0e0e0;
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-      padding: 1.6rem 1rem;
+      gap: 0.5rem;
+      padding: 1.5rem 1rem;
       position: fixed;
-      top: 0;
-      right: -240px;
+      top: var(--header-height);
+      right: -250px;
       bottom: 0;
       box-shadow: var(--sidebar-shadow);
-      z-index: 1002;
-      backdrop-filter: var(--glass-blur);
-      border-top-left-radius: 24px;
-      user-select: none;
-      transition: right 0.5s;
+      z-index: 1000;
+      transition: right 0.4s;
+      overflow-y: auto;
+    }
+
+    [data-theme="dark"] #sidebar {
+      background: #2a2a2a;
+      border-left: 1px solid #444;
     }
 
     #sidebar.open {
@@ -171,121 +184,185 @@
     }
 
     .sidebar-btn {
-      background: none;
-      border: none;
-      color: var(--text-color);
+      background: white;
+      color: #333;
       text-align: left;
-      padding: 0.9rem 1.3rem;
+      padding: 1rem 1.5rem;
       font-size: 1.1rem;
-      border-radius: 12px;
+      border-radius: 10px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 600;
       display: flex;
       align-items: center;
-      gap: 0.7rem;
+      gap: 1rem;
       transition: all var(--transition);
-      outline: none;
-      width: 100%;
+      border: 1px solid #e0e0e0;
+      box-shadow: var(--shadow-light);
+    }
+
+    [data-theme="dark"] .sidebar-btn {
+      background: #333;
+      color: #f0f0f0;
+      border: 1px solid #444;
     }
 
     .sidebar-btn.active,
     .sidebar-btn:hover {
-      background: var(--accent-color);
-      color: #fff;
-      box-shadow: 0 0 24px 2px rgba(180, 0, 0, 0.35);
+      background: #c62828;
+      color: white;
       transform: translateX(-5px);
+      border-color: #c62828;
+    }
+
+    [data-theme="dark"] .sidebar-btn.active,
+    [data-theme="dark"] .sidebar-btn:hover {
+      background: #ff5252;
     }
 
     /* MAIN CONTENT */
     main {
-      margin-right: var(--sidebar-width);
-      padding: calc(var(--header-height) + 1.5rem) 3vw 2vw 3vw;
-      max-width: 1130px;
+      padding: calc(var(--header-height) + 2rem) 5% 2rem 5%;
+      max-width: 1200px;
       min-height: 90vh;
       user-select: text;
       transition: margin 0.3s;
       display: flex;
       flex-direction: column;
       width: 100%;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 0 auto;
     }
 
     section {
       display: none;
-      animation: fadeIn 0.7s;
+      animation: fadeIn 0.5s;
       width: 100%;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: var(--shadow-light);
+      border: 1px solid var(--border-color);
     }
 
     section.active {
       display: block;
     }
 
+    .section-title {
+      color: #c62828;
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #c62828;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    [data-theme="dark"] .section-title {
+      color: #ff5252;
+      border-bottom: 2px solid #ff5252;
+    }
+
     @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     /* FORM STYLES */
-    .tag-filter {
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 1.4rem;
+    .tag-filter-container {
+      margin-bottom: 2rem;
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: var(--shadow-light);
+      border: 1px solid var(--border-color);
+    }
+
+    .tag-filter-title {
+      font-size: 1.2rem;
       font-weight: 700;
-      font-size: 1.05rem;
+      margin-bottom: 1rem;
+      color: #c62828;
+    }
+
+    [data-theme="dark"] .tag-filter-title {
+      color: #ff5252;
+    }
+
+    .tag-options {
+      display: flex;
       flex-wrap: wrap;
+      gap: 0.8rem;
     }
 
-    #tag-filter-select {
-      min-width: 150px;
-      min-height: 100px;
-      padding: 0.35rem 0.7rem;
-      border-radius: 11px;
-      border: 2px solid var(--border-color);
-      background: var(--card-bg-blur);
-      color: var(--text-color);
-      font-size: 1.01rem;
+    .tag-option {
+      position: relative;
+    }
+
+    .tag-option input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .tag-option label {
+      display: block;
+      padding: 0.8rem 1.5rem;
+      background: white;
+      color: #333;
+      border: 2px solid #e0e0e0;
+      border-radius: 50px;
       cursor: pointer;
-      transition: all var(--transition);
+      font-weight: 600;
+      transition: all 0.3s;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
       user-select: none;
-      outline: none;
     }
 
-    #tag-filter-select:focus,
-    #tag-filter-select:hover {
-      border-color: var(--accent-color);
-      outline: none;
-      box-shadow: 0 0 12px 2px rgba(198, 40, 40, 0.35);
-      background: var(--accent-color-hover);
-      color: #fff;
+    [data-theme="dark"] .tag-option label {
+      background: #333;
+      color: #f0f0f0;
+      border: 2px solid #444;
+    }
+
+    .tag-option input:checked + label {
+      background: #c62828;
+      color: white;
+      border-color: #c62828;
+      box-shadow: 0 4px 10px rgba(198, 40, 40, 0.2);
+    }
+
+    [data-theme="dark"] .tag-option input:checked + label {
+      background: #ff5252;
+      border-color: #ff5252;
+    }
+
+    .tag-option label:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.15);
     }
 
     .form-section {
-      background: var(--card-bg-blur);
-      backdrop-filter: var(--blur);
-      border-radius: 20px;
-      padding: 1.5rem 2rem;
-      margin-bottom: 2.5rem;
-      border: 1.3px solid var(--border-color);
+      background: var(--card-bg);
+      border-radius: 16px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--border-color);
       box-shadow: var(--shadow-light);
-      animation: fadeIn 0.81s;
-      position: relative;
-      transition: box-shadow var(--transition), background var(--transition);
     }
 
     .form-section h3 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 1.2rem;
-      color: var(--accent-color);
+      color: #c62828;
       display: flex;
       align-items: center;
       gap: 0.7rem;
     }
 
-    .form-section:focus-within {
-      box-shadow: 0 6px 38px 0 rgba(180, 0, 0, 0.45);
-      z-index: 222;
+    [data-theme="dark"] .form-section h3 {
+      color: #ff5252;
     }
 
     textarea#suggested-news,
@@ -293,55 +370,78 @@
     .form-section input,
     .form-section select {
       width: 100%;
-      margin-top: 0.5rem;
-      padding: 0.9rem 1.2rem;
-      border: 1.8px solid var(--border-color);
+      margin-top: 0.8rem;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
       border-radius: 12px;
-      background: var(--card-bg-blur);
-      color: var(--text-color);
+      background: white;
+      color: #333;
       font-size: 1rem;
       font-weight: 500;
       resize: vertical;
       transition: all var(--transition);
       font-family: var(--font-primary);
-      box-shadow: 0 1.5px 7px 0 rgba(100, 0, 0, 0.14) inset;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] textarea#suggested-news,
+    [data-theme="dark"] .form-section textarea,
+    [data-theme="dark"] .form-section input,
+    [data-theme="dark"] .form-section select {
+      background: #333;
+      color: #f0f0f0;
+      border: 2px solid #444;
     }
 
     .form-section input:focus,
     .form-section textarea:focus,
     .form-section select:focus {
-      border-color: var(--accent-color);
+      border-color: #c62828;
       outline: none;
-      background: var(--card-bg);
-      box-shadow: 0 0 16px rgba(198, 40, 40, 0.35);
+      box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.2);
+    }
+
+    [data-theme="dark"] .form-section input:focus,
+    [data-theme="dark"] .form-section textarea:focus,
+    [data-theme="dark"] .form-section select:focus {
+      border-color: #ff5252;
+      box-shadow: 0 0 0 3px rgba(255, 82, 82, 0.3);
     }
 
     .form-btn {
-      background: var(--accent-color);
+      background: #c62828;
       color: white;
       border: none;
-      padding: 0.8rem 1.5rem;
+      padding: 0.9rem 1.8rem;
       border-radius: 12px;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: all var(--transition);
-      margin-top: 1rem;
+      margin-top: 1.2rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 3px 12px rgba(180, 0, 0, 0.35);
+      gap: 0.7rem;
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.25);
+    }
+
+    [data-theme="dark"] .form-btn {
+      background: #ff5252;
     }
 
     .form-btn:hover {
-      background: var(--accent-color-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(180, 0, 0, 0.45);
+      background: #8e0000;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(198, 40, 40, 0.35);
+    }
+
+    [data-theme="dark"] .form-btn:hover {
+      background: #ff1a1a;
     }
 
     .btn-group {
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       margin-top: 1.5rem;
       flex-wrap: wrap;
     }
@@ -351,110 +451,142 @@
       gap: 0.5rem;
       margin-bottom: 1rem;
       flex-wrap: wrap;
-      background: var(--card-bg-blur);
+      background: white;
       border-radius: 12px;
-      padding: 8px 12px;
-      border: 1.2px solid var(--border-color);
-      box-shadow: 0 0 6px 1px rgba(150, 0, 0, 0.18) inset;
+      padding: 0.8rem;
+      border: 1px solid #e0e0e0;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+    }
+
+    [data-theme="dark"] .editor-toolbar {
+      background: #333;
+      border: 1px solid #444;
     }
 
     .editor-toolbar button {
-      background: var(--card-bg-blur);
-      border: 1px solid var(--border-color);
-      color: var(--text-color);
+      background: white;
+      border: 1px solid #e0e0e0;
+      color: #333;
       border-radius: 8px;
-      padding: 0.5rem 0.8rem;
-      font-size: 1.05rem;
+      padding: 0.6rem;
+      font-size: 1.1rem;
       cursor: pointer;
       font-weight: bold;
       transition: all var(--transition);
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 36px;
-      min-height: 36px;
+      min-width: 40px;
+      min-height: 40px;
+    }
+
+    [data-theme="dark"] .editor-toolbar button {
+      background: #444;
+      border: 1px solid #555;
+      color: #f0f0f0;
     }
 
     .editor-toolbar button:hover,
     .editor-toolbar button:focus {
-      background: var(--accent-color);
-      color: #fff;
-      border-color: #fff;
-      transform: scale(1.08);
+      background: #c62828;
+      color: white;
+      border-color: #c62828;
+      transform: scale(1.05);
+    }
+
+    [data-theme="dark"] .editor-toolbar button:hover {
+      background: #ff5252;
     }
 
     /* NEWS STYLES */
     .news {
-      background: var(--card-bg-blur);
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      border-left: 8px solid var(--accent-color);
-      border-radius: 18px;
+      background: white;
+      padding: 1.8rem;
+      margin-bottom: 1.8rem;
+      border-left: 5px solid #c62828;
+      border-radius: 16px;
       box-shadow: var(--shadow-light);
       position: relative;
       transition: all var(--transition);
-      cursor: pointer;
-      animation: fadeIn 1.2s;
-      backdrop-filter: var(--blur);
+      animation: fadeIn 0.8s;
+    }
+
+    [data-theme="dark"] .news {
+      background: #333;
+      border-left: 5px solid #ff5252;
     }
 
     .news:hover {
-      transform: translateY(-3px) scale(1.015);
+      transform: translateY(-5px);
       box-shadow: var(--shadow-hover);
-      border-left-color: var(--accent-color-hover);
     }
 
     .news-tag {
       font-weight: 800;
-      color: var(--accent-color);
-      font-size: 1.15rem;
+      color: #c62828;
+      font-size: 1.1rem;
       margin-bottom: 0.8rem;
       user-select: none;
-      letter-spacing: 0.045em;
-      background: rgba(198, 40, 40, 0.15);
-      border-radius: 8px;
-      padding: 0.3rem 1rem;
+      letter-spacing: 0.03em;
+      background: rgba(198, 40, 40, 0.1);
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
       display: inline-block;
-      box-shadow: 0 2px 8px 0 rgba(180, 0, 0, 0.25);
+    }
+
+    [data-theme="dark"] .news-tag {
+      color: #ff5252;
+      background: rgba(255, 82, 82, 0.15);
     }
 
     .news time {
       font-size: 0.9rem;
-      color: var(--border-color);
+      color: #888;
       font-style: italic;
       display: block;
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       user-select: none;
     }
 
+    [data-theme="dark"] .news time {
+      color: #aaa;
+    }
+
     .news .actions {
-      margin-top: 1.5rem;
+      margin-top: 1.8rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       flex-wrap: wrap;
     }
 
     .news .actions button {
-      font-size: 0.95rem;
-      background: var(--accent-color);
+      font-size: 1rem;
+      background: #c62828;
       border: none;
       color: white;
-      padding: 0.5rem 1.2rem;
+      padding: 0.7rem 1.5rem;
       border-radius: 12px;
       cursor: pointer;
       font-weight: 700;
-      box-shadow: 0 2px 8px 0 rgba(180, 0, 0, 0.35);
+      box-shadow: 0 3px 8px rgba(198, 40, 40, 0.25);
       transition: all var(--transition);
-      outline: none;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.7rem;
+    }
+
+    [data-theme="dark"] .news .actions button {
+      background: #ff5252;
     }
 
     .news .actions button:hover {
-      background: var(--accent-color-hover);
-      box-shadow: 0 4px 14px 0 rgba(180, 0, 0, 0.45);
+      background: #8e0000;
+      box-shadow: 0 5px 14px rgba(198, 40, 40, 0.35);
       transform: translateY(-2px);
+    }
+
+    [data-theme="dark"] .news .actions button:hover {
+      background: #ff1a1a;
     }
 
     /* MODAL STYLES */
@@ -470,25 +602,28 @@
       align-items: center;
       z-index: 9999;
       user-select: none;
-      will-change: backdrop-filter, background;
-      animation: fadeIn 0.6s;
+      animation: fadeIn 0.4s;
       backdrop-filter: var(--glass-blur);
     }
 
     #preview-content {
-      background: var(--card-bg-blur);
-      color: var(--text-color);
+      background: white;
+      color: #333;
       padding: 2.5rem;
-      border-radius: 26px;
+      border-radius: 20px;
       max-width: min(90vw, 800px);
       max-height: 85vh;
       overflow-y: auto;
-      box-shadow: 0 0 44px 7px rgba(180, 0, 0, 0.55);
+      box-shadow: 0 0 40px rgba(198, 40, 40, 0.3);
       user-select: text;
-      backdrop-filter: var(--blur);
-      border: 2px solid var(--accent-color);
       position: relative;
-      margin: 0.2rem auto;
+      border: 2px solid #c62828;
+    }
+
+    [data-theme="dark"] #preview-content {
+      background: #333;
+      color: #f0f0f0;
+      border: 2px solid #ff5252;
     }
 
     #preview-close {
@@ -497,18 +632,31 @@
       right: 20px;
       background: transparent;
       border: none;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: var(--accent-color);
+      font-size: 2.2rem;
+      font-weight: 300;
+      color: #c62828;
       cursor: pointer;
-      transition: color 0.21s;
+      transition: color 0.2s;
       z-index: 222;
       line-height: 1;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    [data-theme="dark"] #preview-close {
+      color: #ff5252;
     }
 
     #preview-close:hover {
-      color: var(--accent-color-hover);
+      color: #8e0000;
       transform: scale(1.1);
+    }
+
+    [data-theme="dark"] #preview-close:hover {
+      color: #ff1a1a;
     }
 
     /* LOGIN PANEL */
@@ -518,78 +666,112 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: var(--card-bg);
+      background: white;
       padding: 2.5rem;
       border-radius: 20px;
-      box-shadow: 0 0 35px rgba(0, 0, 0, 0.45), 0 0 15px var(--accent-color-hover);
+      box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
       z-index: 10000;
       user-select: none;
-      width: min(90vw, 350px);
-      backdrop-filter: var(--blur);
-      border: 2px solid var(--accent-color);
+      width: min(90vw, 400px);
+      border: 2px solid #c62828;
+    }
+
+    [data-theme="dark"] #login-panel {
+      background: #333;
+      border: 2px solid #ff5252;
     }
 
     #login-panel h3 {
-      color: var(--accent-color);
-      font-size: 1.7rem;
-      font-weight: 800;
+      color: #c62828;
+      font-size: 1.8rem;
+      font-weight: 700;
       text-align: center;
       margin: 0 0 1.5rem 0;
-      letter-spacing: 0.04em;
+    }
+
+    [data-theme="dark"] #login-panel h3 {
+      color: #ff5252;
     }
 
     #login-panel input {
       width: 100%;
-      padding: 0.9rem 1.2rem;
+      padding: 1rem;
       margin-bottom: 1.5rem;
       border-radius: 12px;
-      border: 2px solid var(--border-color);
-      background: var(--card-bg-blur);
-      color: var(--text-color);
-      font-size: 1.05rem;
+      border: 2px solid #e0e0e0;
+      background: white;
+      color: #333;
+      font-size: 1.1rem;
       transition: all var(--transition);
     }
 
+    [data-theme="dark"] #login-panel input {
+      background: #444;
+      color: #f0f0f0;
+      border: 2px solid #555;
+    }
+
     #login-panel input:focus {
-      border-color: var(--accent-color);
+      border-color: #c62828;
       outline: none;
-      box-shadow: 0 0 16px rgba(198, 40, 40, 0.35);
+      box-shadow: 0 0 0 3px rgba(198, 40, 40, 0.2);
+    }
+
+    [data-theme="dark"] #login-panel input:focus {
+      border-color: #ff5252;
+      box-shadow: 0 0 0 3px rgba(255, 82, 82, 0.3);
     }
 
     .btns {
       display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
+      justify-content: center;
+      gap: 1.5rem;
     }
 
     .btns button {
-      padding: 0.7rem 1.5rem;
+      padding: 0.8rem 1.8rem;
       border-radius: 12px;
       font-weight: 700;
       cursor: pointer;
       transition: all var(--transition);
+      font-size: 1.1rem;
     }
 
     .btns button:first-child {
-      background: var(--accent-color);
+      background: #c62828;
       color: white;
       border: none;
+      box-shadow: 0 4px 12px rgba(198, 40, 40, 0.25);
+    }
+
+    [data-theme="dark"] .btns button:first-child {
+      background: #ff5252;
     }
 
     .btns button:first-child:hover {
-      background: var(--accent-color-hover);
+      background: #8e0000;
       transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(180, 0, 0, 0.35);
+      box-shadow: 0 6px 16px rgba(198, 40, 40, 0.35);
     }
 
     .btns button:last-child {
-      background: transparent;
-      color: var(--text-color);
-      border: 2px solid var(--border-color);
+      background: white;
+      color: #333;
+      border: 2px solid #e0e0e0;
+    }
+
+    [data-theme="dark"] .btns button:last-child {
+      background: #444;
+      color: #f0f0f0;
+      border: 2px solid #555;
     }
 
     .btns button:last-child:hover {
-      background: rgba(180, 0, 0, 0.15);
+      background: #f5f5f5;
+    }
+
+    [data-theme="dark"] .btns button:last-child:hover {
+      background: #555;
     }
 
     /* SUGGESTIONS */
@@ -597,20 +779,19 @@
       max-height: 500px;
       overflow-y: auto;
       margin-top: 1rem;
-      border: 1.5px solid var(--border-color);
+      border: 1px solid var(--border-color);
       border-radius: 16px;
-      background: var(--card-bg-blur);
+      background: var(--card-bg);
       box-shadow: var(--shadow-light);
       user-select: text;
-      backdrop-filter: var(--blur);
     }
 
     .suggestion-item {
-      border-bottom: 1.5px solid var(--border-color);
+      border-bottom: 1px solid var(--border-color);
       padding: 1.5rem;
       position: relative;
-      font-size: 1.05rem;
-      line-height: 1.5;
+      font-size: 1.1rem;
+      line-height: 1.6;
       word-break: break-word;
     }
 
@@ -618,62 +799,82 @@
       border-bottom: none;
     }
 
+    .suggestion-date {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 0.8rem;
+      font-style: italic;
+    }
+
+    [data-theme="dark"] .suggestion-date {
+      color: #aaa;
+    }
+
     .suggestion-actions {
-      margin-top: 1.2rem;
+      margin-top: 1.5rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       justify-content: flex-end;
     }
 
     .suggestion-actions button {
-      background: var(--accent-color);
+      background: #c62828;
       border: none;
       color: #fff;
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 700;
       border-radius: 10px;
-      padding: 0.5rem 1.2rem;
+      padding: 0.7rem 1.5rem;
       cursor: pointer;
       transition: all var(--transition);
       user-select: none;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.7rem;
+      box-shadow: 0 3px 8px rgba(198, 40, 40, 0.25);
+    }
+
+    [data-theme="dark"] .suggestion-actions button {
+      background: #ff5252;
     }
 
     .suggestion-actions button:hover {
-      background: var(--accent-color-hover);
+      background: #8e0000;
       transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(180, 0, 0, 0.35);
+      box-shadow: 0 5px 14px rgba(198, 40, 40, 0.35);
     }
 
     /* NOTIFICATIONS */
     #notifications-container {
       position: fixed;
-      top: 5rem;
+      top: 6rem;
       right: 2vw;
-      max-width: 350px;
+      max-width: 380px;
       z-index: 11001;
       user-select: none;
     }
 
     .notification {
-      background: var(--accent-color);
+      background: #c62828;
       color: #fff;
       padding: 1.2rem 1.8rem;
       margin-bottom: 1.2rem;
-      border-radius: 18px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
-      font-weight: 800;
-      font-size: 1.15rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+      font-weight: 700;
+      font-size: 1.1rem;
       opacity: 0;
       transform: translateX(120%);
-      animation: slideIn 0.52s forwards;
+      animation: slideIn 0.5s forwards;
       user-select: none;
       will-change: transform, opacity;
       display: flex;
       align-items: center;
-      gap: 0.8rem;
+      gap: 1rem;
+    }
+
+    [data-theme="dark"] .notification {
+      background: #ff5252;
     }
 
     .notification.success {
@@ -681,7 +882,7 @@
     }
 
     .notification.error {
-      background: var(--accent-color-hover);
+      background: #e53935;
     }
 
     .notification.info {
@@ -703,91 +904,80 @@
     }
 
     /* RESPONSIVE ADJUSTMENTS */
-    @media (max-width: 920px) {
-      #sidebar {
-        width: 280px;
-        padding: 1.2rem 0.8rem;
+    @media (max-width: 1024px) {
+      main {
+        padding: calc(var(--header-height) + 1.5rem) 4% 1.5rem 4%;
       }
+      
+      .tag-options {
+        gap: 0.6rem;
+      }
+      
+      .tag-option label {
+        padding: 0.7rem 1.2rem;
+      }
+    }
 
+    @media (max-width: 768px) {
       header {
-        padding: 0 1rem;
+        padding: 0 1.2rem;
+        font-size: 1.5rem;
       }
-
+      
       .header-btn span {
         display: none;
       }
-
+      
       .header-btn {
-        padding: 0.5rem;
-        width: 40px;
-        height: 40px;
+        padding: 0.6rem;
+        width: 45px;
+        height: 45px;
         justify-content: center;
       }
-
-      main {
-        padding: calc(var(--header-height) + 1rem) 2vw 2vw 2vw;
+      
+      .section-title {
+        font-size: 1.5rem;
       }
-    }
-
-    @media (max-width: 700px) {
-      #sidebar {
-        width: 100%;
-        max-width: 300px;
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 24px;
-      }
-
-      main {
-        margin-right: 0;
-        padding-left: 1rem;
-        padding-right: 1rem;
-      }
-
-      .tag-filter {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.8rem;
-      }
-
-      #tag-filter-select {
-        width: 100%;
-      }
-    }
-
-    @media (max-width: 500px) {
-      header {
-        font-size: 1.3rem;
-        padding: 0 0.8rem;
-      }
-
-      .header-controls {
-        gap: 0.5rem;
-      }
-
-      .form-section,
-      .news {
-        padding: 1.2rem;
-      }
-
-      .form-section h3 {
-        font-size: 1.25rem;
-      }
-
-      .editor-toolbar {
-        padding: 6px;
-      }
-
-      .editor-toolbar button {
-        padding: 0.4rem;
-        font-size: 0.95rem;
-      }
-
-      #preview-content {
+      
+      section {
         padding: 1.5rem;
       }
+      
+      .form-section {
+        padding: 1.2rem;
+      }
+      
+      .tag-filter-container {
+        padding: 1.2rem;
+      }
+    }
 
-      #login-panel {
-        padding: 1.8rem;
+    @media (max-width: 576px) {
+      #sidebar {
+        width: 85%;
+        padding: 1.2rem 0.8rem;
+      }
+      
+      .tag-options {
+        justify-content: center;
+      }
+      
+      .news {
+        padding: 1.5rem;
+      }
+      
+      .suggestion-item {
+        padding: 1.2rem;
+      }
+      
+      .suggestion-actions {
+        flex-direction: column;
+        gap: 0.8rem;
+      }
+      
+      .suggestion-actions button {
+        width: 100%;
+        justify-content: center;
       }
     }
   </style>
@@ -812,19 +1002,48 @@
 
   <main>
     <section id="news" class="active" role="tabpanel" aria-labelledby="news-tab-btn">
-      <div class="tag-filter">
-        <label for="tag-filter-select">Фільтр за тегом:</label>
-        <select id="tag-filter-select" multiple size="5" onchange="renderNewsByTags(this)" aria-controls="news-feed" aria-label="Фільтр новин за тегом">
-          <option value="all">Всі</option>
-          <option value="Політика">Політика</option>
-          <option value="Спорт">Спорт</option>
-          <option value="Культура">Культура</option>
-          <option value="ГРП">ГРП</option>
-          <option value="Робота Держ.структур">Робота Держ.структур</option>
-          <option value="Фотосесія">Фотосесія</option>
-          <option value="Конкурс">Конкурс</option>
-          <option value="Важливе">Важливе</option>
-        </select>
+      <h2 class="section-title">📰 Останні новини</h2>
+      
+      <div class="tag-filter-container">
+        <div class="tag-filter-title">Фільтр за тегами:</div>
+        <div class="tag-options">
+          <div class="tag-option">
+            <input type="checkbox" id="tag-all" name="tag" value="all" checked onchange="renderNewsByTags()">
+            <label for="tag-all">Всі</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-politics" name="tag" value="Політика" onchange="renderNewsByTags()">
+            <label for="tag-politics">Політика</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-sport" name="tag" value="Спорт" onchange="renderNewsByTags()">
+            <label for="tag-sport">Спорт</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-culture" name="tag" value="Культура" onchange="renderNewsByTags()">
+            <label for="tag-culture">Культура</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-grp" name="tag" value="ГРП" onchange="renderNewsByTags()">
+            <label for="tag-grp">ГРП</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-government" name="tag" value="Робота Держ.структур" onchange="renderNewsByTags()">
+            <label for="tag-government">Держструктури</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-photo" name="tag" value="Фотосесія" onchange="renderNewsByTags()">
+            <label for="tag-photo">Фотосесія</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-contest" name="tag" value="Конкурс" onchange="renderNewsByTags()">
+            <label for="tag-contest">Конкурс</label>
+          </div>
+          <div class="tag-option">
+            <input type="checkbox" id="tag-important" name="tag" value="Важливе" onchange="renderNewsByTags()">
+            <label for="tag-important">Важливе</label>
+          </div>
+        </div>
       </div>
       
       <div class="form-section">
@@ -841,13 +1060,13 @@
     </section>
 
     <section id="submit" role="tabpanel" aria-labelledby="submit-tab-btn">
-      <div class="form-section">
-        <h3>📨 Запропоновані новини</h3>
-        <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
-      </div>
+      <h2 class="section-title">📨 Запропоновані новини</h2>
+      <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
     </section>
 
     <section id="admin" class="admin-section" role="tabpanel" aria-labelledby="admin-tab-btn">
+      <h2 class="section-title">⚙️ Адміністрування</h2>
+      
       <div class="form-section">
         <h3>📝 Публікація новини</h3>
         
@@ -862,27 +1081,53 @@
           <button type="button" title="Очистити формат" onclick="format('removeFormat')">✕</button>
         </div>
         
-        <div id="editor" contenteditable="true" aria-label="Редактор новини" role="textbox" spellcheck="true" style="min-height: 150px; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px;"></div>
+        <div id="editor" contenteditable="true" aria-label="Редактор новини" role="textbox" spellcheck="true" style="min-height: 200px; padding: 1.2rem; border: 1px solid var(--border-color); border-radius: 12px; background: white; margin-bottom: 1.5rem;"></div>
         
-        <label for="image-upload" style="margin-top: 1.2rem; display: block; font-weight: 600; color: var(--accent-color);">
-          🖼️ Завантажити зображення:
-        </label>
-        <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" />
-        <img id="preview-image" alt="Прев'ю зображення" style="max-width: 100%; display: none; border-radius: 12px; margin: 1rem 0; border: 2px solid var(--border-color);" />
-        
-        <label for="tag-select" style="margin-top: 1.2rem; display: block; font-weight: 600; color: var(--accent-color);">
-          🏷️ Виберіть тег новини:
-        </label>
-        <select id="tag-select" aria-label="Вибір тегу новини" style="margin-bottom: 1.5rem;">
-          <option value="Політика">Політика</option>
-          <option value="Спорт">Спорт</option>
-          <option value="Культура">Культура</option>
-          <option value="ГРП">ГРП</option>
-          <option value="Робота Держ.структур">Робота Держ.структур</option>
-          <option value="Фотосесія">Фотосесія</option>
-          <option value="Конкурс">Конкурс</option>
-          <option value="Важливе">Важливе</option>
-        </select>
+        <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+          <div style="flex: 1; min-width: 250px;">
+            <h3 style="margin-bottom: 1rem;">🏷️ Виберіть теги:</h3>
+            <div class="tag-options">
+              <div class="tag-option">
+                <input type="checkbox" id="pub-politics" name="pub-tag" value="Політика">
+                <label for="pub-politics">Політика</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-sport" name="pub-tag" value="Спорт">
+                <label for="pub-sport">Спорт</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-culture" name="pub-tag" value="Культура">
+                <label for="pub-culture">Культура</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-grp" name="pub-tag" value="ГРП">
+                <label for="pub-grp">ГРП</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-government" name="pub-tag" value="Робота Держ.структур">
+                <label for="pub-government">Держструктури</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-photo" name="pub-tag" value="Фотосесія">
+                <label for="pub-photo">Фотосесія</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-contest" name="pub-tag" value="Конкурс">
+                <label for="pub-contest">Конкурс</label>
+              </div>
+              <div class="tag-option">
+                <input type="checkbox" id="pub-important" name="pub-tag" value="Важливе">
+                <label for="pub-important">Важливе</label>
+              </div>
+            </div>
+          </div>
+          
+          <div style="flex: 1; min-width: 250px;">
+            <h3 style="margin-bottom: 1rem;">🖼️ Завантажити зображення:</h3>
+            <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" style="margin-bottom: 1rem; width: 100%;" />
+            <img id="preview-image" alt="Прев'ю зображення" style="max-width: 100%; display: none; border-radius: 12px; border: 1px solid var(--border-color);" />
+          </div>
+        </div>
         
         <div class="btn-group">
           <button class="form-btn" onclick="publishNews()">📢 Опублікувати</button>
@@ -950,7 +1195,7 @@
         img.src = e.target.result;
         img.style.display = "block";
 
-        // Дублирование изображения исправлено
+        // Вставка изображения в редактор
         const imgElem = document.createElement('img');
         imgElem.src = e.target.result;
         imgElem.style.maxWidth = "100%";
@@ -981,7 +1226,7 @@
       if (pass === "admin") {
         showNotification("Авторизовано 👑", "success");
         document.getElementById("admin-tab-btn").style.display = "";
-        showTab({ currentTarget: document.getElementById('admin-tab-btn') }, 'admin');
+        document.querySelector('button[onclick="showTab(event, \'admin\')"]').style.display = "";
         closeLoginPanel();
       } else showNotification("Невірний пароль!", "error");
     }
@@ -1006,15 +1251,15 @@
       list.innerHTML = suggestions.length
         ? suggestions.map((s, i) => `
           <div class="suggestion-item">
-            <div style="margin-bottom: 0.8rem;">${s.text}</div>
+            <div>${s.text}</div>
+            <div class="suggestion-date">${s.date}</div>
             <div class="suggestion-actions">
               <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
               <button onclick="deleteSuggestion(${i})">🗑️ Видалити</button>
             </div>
-            <div style="font-size: 0.9rem; color: var(--border-color); margin-top: 0.5rem;">${s.date}</div>
           </div>
         `).join('')
-        : '<div style="padding:1.5rem;color:var(--border-color);text-align:center;">Немає запропонованих новин.</div>';
+        : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Немає запропонованих новин.</div>';
     }
 
     function deleteSuggestion(i) {
@@ -1050,32 +1295,61 @@
     let news = JSON.parse(localStorage.getItem('news') || '[]');
 
     function publishNews() {
-      let tag = document.getElementById('tag-select').value;
+      // Получаем выбранные теги
+      const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
+        .map(checkbox => checkbox.value);
+      
+      if (selectedTags.length === 0) {
+        showNotification("Виберіть хоча б один тег!", "error");
+        return;
+      }
+      
       let html = document.getElementById('editor').innerHTML.trim();
       let img = document.getElementById('preview-image').src;
-      if (html.length < 10) { showNotification("Дуже коротка новина!", "error"); return; }
+      if (html.length < 10) { 
+        showNotification("Дуже коротка новина!", "error"); 
+        return; 
+      }
+      
       let item = {
-        tag,
+        tags: selectedTags,
         html,
         img: img.startsWith('data:') ? img : '',
         date: new Date().toLocaleString()
       };
+      
       news.unshift(item);
       localStorage.setItem('news', JSON.stringify(news));
       showNotification("Новину опубліковано!", "success");
+      
+      // Сброс формы
       document.getElementById('editor').innerHTML = "";
       document.getElementById('preview-image').style.display = "none";
       document.getElementById('preview-image').src = "";
+      document.querySelectorAll('input[name="pub-tag"]').forEach(cb => cb.checked = false);
+      
+      // Переход на вкладку новостей
+      showTab({ currentTarget: document.getElementById('news-tab-btn') }, 'news');
       renderNews();
     }
 
     function renderNews(list = news) {
       let feed = document.getElementById('news-feed');
       if (!feed) return;
-      feed.innerHTML = list.length
-        ? list.map((n, i) => `
+      
+      // Получаем выбранные теги для фильтрации
+      const selectedTags = Array.from(document.querySelectorAll('input[name="tag"]:checked'))
+        .map(checkbox => checkbox.value);
+      
+      // Если выбран тег "Все" или ничего не выбрано, показываем все новости
+      const filteredNews = (selectedTags.includes('all') || selectedTags.length === 0) 
+        ? list 
+        : list.filter(n => n.tags.some(tag => selectedTags.includes(tag)));
+      
+      feed.innerHTML = filteredNews.length
+        ? filteredNews.map((n, i) => `
           <div class="news">
-            <div class="news-tag">${n.tag}</div>
+            <div class="news-tag">${n.tags.map(tag => tag).join(', ')}</div>
             <div class="news-text">${n.html}${n.img ? `<img src="${n.img}" style="width:97%;border-radius:12px;margin:12px 0 0 0;" />` : ""}</div>
             <time>${n.date ?? ""}</time>
             <div class="actions">
@@ -1084,7 +1358,8 @@
             </div>
           </div>
         `).join('')
-        : '<div style="padding:1.5rem;color:var(--border-color);text-align:center;">Поки що новин немає.</div>';
+        : '<div style="padding:2rem;color:var(--text-color);text-align:center;opacity:0.7;">Новин за обраними тегами не знайдено.</div>';
+      
       document.getElementById('delete-all-btn').hidden = !list.length;
     }
 
@@ -1098,24 +1373,32 @@
 
     function deleteAllNews() {
       if (confirm('Видалити всі новини безповоротно?')) {
-        news = []; localStorage.removeItem('news'); renderNews();
+        news = []; 
+        localStorage.removeItem('news'); 
+        renderNews();
       }
     }
 
     // --- Теги фильтр ---
-    function renderNewsByTags(sel) {
-      if (!sel) sel = document.getElementById('tag-filter-select');
-      let selected = Array.from(sel.selectedOptions).map(o => o.value);
-      if (selected.includes('all') || !selected.length) renderNews();
-      else renderNews(news.filter(n => selected.includes(n.tag)));
+    function renderNewsByTags() {
+      renderNews();
     }
 
     // ---- ПРЕДПРОСМОТР (modal) ----
     function showPreview() {
-      let tag = document.getElementById('tag-select').value;
+      // Получаем выбранные теги
+      const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
+        .map(checkbox => checkbox.value);
+      
+      if (selectedTags.length === 0) {
+        showNotification("Виберіть хоча б один тег!", "error");
+        return;
+      }
+      
       let html = document.getElementById('editor').innerHTML.trim();
       let img = document.getElementById('preview-image').src;
-      document.getElementById('preview-tag').innerText = tag;
+      
+      document.getElementById('preview-tag').innerText = selectedTags.join(', ');
       document.getElementById('preview-text').innerHTML = html + (img && img.startsWith('data:') ? `<img src="${img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
       document.getElementById('preview-date').innerText = new Date().toLocaleString();
       document.getElementById('preview-modal').style.display = 'flex';
@@ -1123,7 +1406,7 @@
 
     function showPreviewFromFeed(i) {
       let n = news[i];
-      document.getElementById('preview-tag').innerText = n.tag;
+      document.getElementById('preview-tag').innerText = n.tags.join(', ');
       document.getElementById('preview-text').innerHTML = n.html + (n.img ? `<img src="${n.img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
       document.getElementById('preview-date').innerText = n.date;
       document.getElementById('preview-modal').style.display = 'flex';
@@ -1141,7 +1424,7 @@
       d.className = 'notification ' + type;
       d.innerText = txt;
       c.appendChild(d);
-      setTimeout(() => { d.style.animation = "slideOut .42s forwards"; }, 2800);
+      setTimeout(() => { d.style.animation = "slideOut .42s forwards"; }, 3000);
       setTimeout(() => { if (d.parentNode) c.removeChild(d); }, 3500);
     }
 
@@ -1149,11 +1432,13 @@
     document.getElementById('notification-toggle').onclick = function () {
       let btn = this;
       if (btn.classList.contains('active')) {
-        btn.classList.remove('active'); btn.innerText = '🔔 Увімкнути повідомлення';
+        btn.classList.remove('active'); 
+        btn.innerHTML = '🔔';
         localStorage.setItem('notifications', '0');
         showNotification("Повідомлення вимкнені", "info");
       } else {
-        btn.classList.add('active'); btn.innerText = '🔕 Вимкнути повідомлення';
+        btn.classList.add('active'); 
+        btn.innerHTML = '🔕';
         localStorage.setItem('notifications', '1');
         showNotification("Повідомлення ввімкнені!", "success");
       }
@@ -1162,15 +1447,19 @@
     (() => {
       if (localStorage.getItem('notifications') === '1') {
         document.getElementById('notification-toggle').classList.add('active');
-        document.getElementById('notification-toggle').innerText = '🔕 Вимкнути повідомлення';
+        document.getElementById('notification-toggle').innerHTML = '🔕';
       }
     })();
 
     // ---- ИНИЦИАЛИЗАЦИЯ (загрузка при старте) ----
     document.addEventListener('DOMContentLoaded', () => {
-      renderNews(); renderSuggestions();
-      renderNewsByTags(document.getElementById('tag-filter-select'));
-      if (localStorage.getItem('news') && news.length) document.getElementById('delete-all-btn').hidden = false;
+      renderNews(); 
+      renderSuggestions();
+      renderNewsByTags();
+      
+      if (localStorage.getItem('news') && news.length) {
+        document.getElementById('delete-all-btn').hidden = false;
+      }
       
       document.addEventListener('keydown', function (e) {
         if (e.key === "Escape" && document.getElementById('login-panel').style.display === 'block')
