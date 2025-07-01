@@ -1,1140 +1,1183 @@
 <!DOCTYPE html>
 <html lang="uk" data-theme="dark">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>ТСН Новини</title>
-<style>
-  :root {
-    --bg-color: #fff;
-    --text-color: #111;
-    --accent-color: #c70000;
-    --accent-color-hover: #9c0000;
-    --card-bg: #fefefe;
-    --border-color: #ddd;
-    --header-height: 60px;
-    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    --shadow-light: 0 2px 10px rgba(0,0,0,0.1);
-  }
-  [data-theme="dark"] {
-    --bg-color: #121212;
-    --text-color: #e0e0e0;
-    --accent-color: #e53935;
-    --accent-color-hover: #b71c1c;
-    --card-bg: #1e1e1e;
-    --border-color: #333;
-    --shadow-light: 0 2px 12px rgba(0,0,0,0.7);
-  }
-
-  * {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
-  }
-
-  body {
-    margin: 0;
-    font-family: var(--font-primary);
-    background-color: var(--bg-color);
-    color: var(--text-color);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    line-height: 1.5;
-    min-height: 100vh;
-    position: relative;
-  }
-
-  aside {
-    width: 240px;
-    background: var(--card-bg);
-    border-right: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;
-    padding: 1.2rem 1rem;
-    gap: 0.7rem;
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    overflow-y: auto;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.1);
-    z-index: 1000;
-    user-select: none;
-  }
-
-  aside button {
-    background: none;
-    border: none;
-    color: var(--text-color);
-    text-align: left;
-    padding: 0.8rem 1.2rem;
-    font-size: 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.25s ease, color 0.25s ease;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-  aside button:hover,
-  aside button.active {
-    background-color: var(--accent-color);
-    color: white;
-    box-shadow: 0 0 8px var(--accent-color);
-  }
-
-  header {
-    position: fixed;
-    top: 0;
-    left: 240px;
-    right: 0;
-    height: var(--header-height);
-    background-color: var(--accent-color);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 2rem;
-    font-weight: 700;
-    font-size: 1.6rem;
-    user-select: none;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
-    z-index: 2000;
-  }
-
-  #login-btn {
-    background: transparent;
-    border: 2px solid rgba(255,255,255,0.85);
-    border-radius: 6px;
-    color: white;
-    font-size: 0.9rem;
-    cursor: pointer;
-    padding: 0.3rem 1rem;
-    font-weight: 600;
-    transition: background-color 0.3s, border-color 0.3s;
-    user-select: none;
-    margin-left: 1rem;
-  }
-  #login-btn:hover {
-    background-color: white;
-    color: var(--accent-color);
-    border-color: white;
-    box-shadow: 0 0 8px white;
-  }
-
-  #notification-toggle {
-    margin-left: 1rem;
-    background: transparent;
-    border: 2px solid white;
-    border-radius: 16px;
-    padding: 0.3rem 1rem;
-    font-weight: 600;
-    font-size: 0.9rem;
-    cursor: pointer;
-    user-select: none;
-    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
-  }
-  #notification-toggle.active {
-    background-color: white;
-    color: var(--accent-color);
-    border-color: white;
-  }
-  #notification-toggle:hover {
-    background-color: white;
-    color: var(--accent-color);
-    border-color: white;
-  }
-
-  main {
-    margin-left: 240px;
-    margin-top: var(--header-height);
-    padding: 2rem 3rem;
-    max-width: 960px;
-    user-select: text;
-  }
-
-  section {
-    display: none;
-    animation: fadeIn 0.5s ease forwards;
-  }
-  section.active {
-    display: block;
-  }
-
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-
-  .tag-filter {
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    font-weight: 700;
-    font-size: 1rem;
-  }
-  .tag-filter label {
-    user-select: none;
-  }
-  .tag-filter select {
-    padding: 0.5rem 0.8rem;
-    border-radius: 8px;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-color);
-    font-size: 1rem;
-    cursor: pointer;
-    transition: border-color 0.25s ease;
-    user-select: none;
-  }
-  .tag-filter select:hover,
-  .tag-filter select:focus {
-    border-color: var(--accent-color);
-    outline: none;
-    box-shadow: 0 0 6px var(--accent-color);
-  }
-
-  .news {
-    background-color: var(--card-bg);
-    padding: 1.5rem 2rem;
-    margin-bottom: 1.8rem;
-    border-left: 6px solid var(--accent-color);
-    border-radius: 12px;
-    box-shadow: var(--shadow-light);
-    position: relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: default;
-  }
-  .news:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-  }
-
-  .news-tag {
-    font-weight: 700;
-    color: var(--accent-color);
-    font-size: 1.05rem;
-    margin-bottom: 0.4rem;
-    user-select: none;
-    letter-spacing: 0.03em;
-  }
-
-  .news time {
-    font-size: 0.8rem;
-    color: gray;
-    display: block;
-    margin-top: 1rem;
-    font-style: italic;
-    user-select: none;
-  }
-
-  .news .actions {
-    margin-top: 1.2rem;
-    display: flex;
-    gap: 0.9rem;
-    flex-wrap: wrap;
-  }
-
-  .news .actions button {
-    font-size: 0.85rem;
-    background: var(--accent-color);
-    border: none;
-    color: white;
-    padding: 0.45rem 1.1rem;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-  }
-  .news .actions button:hover {
-    background: var(--accent-color-hover);
-    box-shadow: 0 4px 14px var(--accent-color-hover);
-  }
-
-  .form-section {
-    background: var(--card-bg);
-    padding: 1.8rem 2rem;
-    border: 1px solid var(--border-color);
-    border-radius: 14px;
-    margin-bottom: 2rem;
-    box-shadow: var(--shadow-light);
-  }
-
-  h3 {
-    margin-top: 0;
-    margin-bottom: 1.2rem;
-    font-weight: 700;
-    font-size: 1.6rem;
-    letter-spacing: 0.05em;
-    user-select: none;
-    color: var(--accent-color);
-  }
-
-  input, textarea, select {
-    width: 100%;
-    margin-top: 0.7rem;
-    padding: 0.7rem 1rem;
-    border: 1.5px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--card-bg);
-    color: var(--text-color);
-    font-size: 1rem;
-    font-weight: 500;
-    resize: vertical;
-    transition: border-color 0.25s ease;
-    user-select: text;
-    font-family: var(--font-primary);
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.07);
-  }
-  input:hover, textarea:hover, select:hover,
-  input:focus, textarea:focus, select:focus {
-    border-color: var(--accent-color);
-    outline: none;
-    box-shadow: 0 0 10px var(--accent-color);
-  }
-
-  #editor {
-    min-height: 160px;
-    padding: 1.2rem;
-    border: 1.5px solid var(--border-color);
-    border-radius: 10px;
-    background: var(--card-bg);
-    outline: none;
-    overflow-y: auto;
-    margin-bottom: 0.8rem;
-    font-size: 1rem;
-    font-weight: 500;
-    line-height: 1.4;
-    user-select: text;
-    box-shadow: inset 0 1px 6px rgba(0,0,0,0.08);
-  }
-
-  #preview-image {
-    margin-top: 0.8rem;
-    max-width: 100%;
-    border-radius: 12px;
-    box-shadow: var(--shadow-light);
-    display: none;
-    user-select: none;
-  }
-
-  button {
-    background: var(--accent-color);
-    border: none;
-    color: white;
-    padding: 0.7rem 1.6rem;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    margin-top: 0.8rem;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    user-select: none;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-    font-size: 1.1rem;
-  }
-  button:hover {
-    background: var(--accent-color-hover);
-    box-shadow: 0 6px 20px var(--accent-color-hover);
-  }
-
-  .admin-section {
-    display: none;
-  }
-
-  /* Scrollbar for editor */
-  #editor::-webkit-scrollbar {
-    width: 10px;
-  }
-  #editor::-webkit-scrollbar-thumb {
-    background: var(--accent-color);
-    border-radius: 6px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
-  }
-  #editor::-webkit-scrollbar-track {
-    background: var(--card-bg);
-    border-radius: 6px;
-  }
-
-  /* Modal styles for preview */
-  #preview-modal {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right:0; bottom:0;
-    background: rgba(0,0,0,0.6);
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
-    user-select: none;
-  }
-  #preview-content {
-    background: var(--card-bg);
-    color: var(--text-color);
-    padding: 2rem 2.5rem;
-    border-radius: 16px;
-    max-width: 750px;
-    max-height: 85vh;
-    overflow-y: auto;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
-    position: relative;
-    user-select: text;
-  }
-  #preview-content .news-tag {
-    font-weight: 700;
-    color: var(--accent-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.3rem;
-    letter-spacing: 0.05em;
-    user-select: none;
-  }
-  #preview-content time {
-    font-size: 0.85rem;
-    color: gray;
-    margin-top: 1.8rem;
-    display: block;
-    font-style: italic;
-    user-select: none;
-  }
-  #preview-close {
-    position: absolute;
-    top: 12px;
-    right: 18px;
-    background: transparent;
-    border: none;
-    font-size: 2.2rem;
-    cursor: pointer;
-    color: var(--accent-color);
-    font-weight: 700;
-    user-select: none;
-    transition: color 0.3s ease;
-  }
-  #preview-close:hover {
-    color: var(--accent-color-hover);
-  }
-
-  /* Входная панель */
-  #login-panel {
-    display: none;
-    position: fixed;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    background: var(--card-bg);
-    padding: 2.2rem 3rem;
-    border-radius: 16px;
-    box-shadow: 0 0 25px rgba(0,0,0,0.7);
-    z-index: 10000;
-    user-select: none;
-    width: 320px;
-  }
-  #login-panel h3 {
-    margin: 0 0 1.2rem 0;
-    color: var(--accent-color);
-    font-weight: 700;
-    font-size: 1.8rem;
-    user-select: none;
-    text-align: center;
-  }
-  #writer-pass {
-    font-size: 1.1rem;
-    padding: 0.6rem 1rem;
-    border-radius: 12px;
-    border: 1.5px solid var(--border-color);
-    width: 100%;
-    box-sizing: border-box;
-    background: var(--card-bg);
-    color: var(--text-color);
-    user-select: text;
-    margin-bottom: 1.8rem;
-    transition: border-color 0.25s ease;
-  }
-  #writer-pass:focus {
-    outline: none;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 10px var(--accent-color);
-  }
-  #login-panel .btns {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
-  }
-  #login-panel button {
-    font-size: 1.1rem;
-    padding: 0.6rem 1.4rem;
-    border-radius: 12px;
-    font-weight: 700;
-    cursor: pointer;
-    border: none;
-    transition: background-color 0.3s ease;
-    user-select: none;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
-  }
-  #login-panel button:first-child {
-    background: var(--accent-color);
-    color: white;
-  }
-  #login-panel button:first-child:hover {
-    background: var(--accent-color-hover);
-    box-shadow: 0 6px 20px var(--accent-color-hover);
-  }
-  #login-panel button:last-child {
-    background: var(--border-color);
-    color: var(--text-color);
-  }
-  #login-panel button:last-child:hover {
-    background: #888;
-    color: white;
-  }
-
-  /* Предложения новостей - список */
-  #suggestions-list {
-    max-height: 400px;
-    overflow-y: auto;
-    margin-top: 1rem;
-    border: 1px solid var(--border-color);
-    border-radius: 12px;
-    background: var(--card-bg);
-    box-shadow: var(--shadow-light);
-    user-select: text;
-  }
-  #suggestions-list .suggestion-item {
-    border-bottom: 1px solid var(--border-color);
-    padding: 1rem 1.2rem;
-    position: relative;
-    font-size: 0.95rem;
-    line-height: 1.3;
-  }
-  #suggestions-list .suggestion-item:last-child {
-    border-bottom: none;
-  }
-  #suggestions-list .suggestion-actions {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    display: flex;
-    gap: 0.6rem;
-  }
-  #suggestions-list .suggestion-actions button {
-    background: var(--accent-color);
-    border: none;
-    color: white;
-    font-size: 0.8rem;
-    font-weight: 700;
-    border-radius: 8px;
-    padding: 0.3rem 0.7rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    user-select: none;
-  }
-  #suggestions-list .suggestion-actions button:hover {
-    background: var(--accent-color-hover);
-  }
-
-  /* Уведомления */
-  #notifications-container {
-    position: fixed;
-    top: var(--header-height);
-    right: 1.5rem;
-    max-width: 320px;
-    z-index: 11000;
-    user-select: none;
-  }
-  .notification {
-    background: var(--accent-color);
-    color: white;
-    padding: 1rem 1.4rem;
-    margin-bottom: 1rem;
-    border-radius: 14px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.35);
-    font-weight: 700;
-    font-size: 1rem;
-    opacity: 0;
-    transform: translateX(100%);
-    animation: slideIn 0.5s forwards;
-    cursor: default;
-    user-select: none;
-  }
-  .notification.success {
-    background: #4caf50;
-  }
-  .notification.error {
-    background: #e53935;
-  }
-  .notification.info {
-    background: #2196f3;
-  }
-  @keyframes slideIn {
-    to {
-      opacity: 1;
-      transform: translateX(0);
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ТСН Новини</title>
+  <style>
+    :root {
+      --bg-color: #ffebee; /* Цвет фона */
+      --text-color: #b71c1c; /* Цвет текста */
+      --accent-color: #c62828; /* Основной акцент */
+      --accent-color-hover: #8e0000; /* Акцент при наведении */
+      --success-color: #4caf50; /* Цвет успеха */
+      --info-color: #2196f3; /* Цвет информации */
+      --card-bg: #ffe0e0; /* Цвет карточек */
+      --card-bg-blur: rgba(255, 224, 224, 0.9); /* Цвет подложки карточек */
+      --border-color: #e57373; /* Цвет границ элементов */
+      --header-height: 60px; /* Высота хедера */
+      --sidebar-width: 220px; /* Ширина боковой панели */
+      --font-primary: 'Segoe UI', 'Nunito', Tahoma, Geneva, Verdana, sans-serif; /* Шрифт */
+      --shadow-light: 0 2px 24px 6px rgba(224, 68, 68, 0.16); /* Легкая тень */
+      --shadow-hover: 0 12px 32px 2px rgba(244, 67, 54, 0.23); /* Тень при наведении */
+      --glass-blur: blur(24px); /* Эффект размытия фона */
+      --transition: 0.24s cubic-bezier(0.4, 0, 0.2, 1); /* Эффект перехода */
+      --gradient: linear-gradient(135deg, #c62828 0%, #b71c1c 100%); /* Градиент фона */
+      --sidebar-shadow: 0 8px 32px rgba(150, 10, 10, 0.18); /* Тень боковой панели */
+      --modal-bg: rgba(100, 20, 20, 0.41); /* Цвет модального фона */
+      --blur: blur(16px); /* Эффект размытия */
     }
-  }
-  @keyframes slideOut {
-    to {
+
+    [data-theme="dark"] {
+      --bg-color: #4a0000; /* Цвет фона для темной темы */
+      --text-color: #ffffff; /* Цвет текста для темной темы */
+      --accent-color: #ff5252; /* Основной акцент для темной темы */
+      --accent-color-hover: #ff1a1a; /* Акцент при наведении для темной темы */
+      --success-color: #4caf50; /* Цвет успеха для темной темы */
+      --info-color: #2196f3; /* Цвет информации для темной темы */
+      --card-bg: #2a0000; /* Цвет карточек для темной темы */
+      --card-bg-blur: rgba(60, 0, 0, 0.8); /* Цвет подложки карточек для темной темы */
+      --border-color: #b71c1c; /* Цвет границ для темной темы */
+      --shadow-light: 0 2px 24px 6px rgba(150, 0, 0, 0.25); /* Легкая тень для темной темы */
+      --shadow-hover: 0 12px 32px rgba(244, 83, 83, 0.27); /* Тень при наведении для темной темы */
+      --sidebar-shadow: 0 8px 32px rgba(65, 0, 0, 0.33); /* Тень боковой панели для темной темы */
+      --gradient: linear-gradient(135deg, #8e0000 0%, #4a0000 100%); /* Градиент фона для темной темы */
+      --modal-bg: rgba(26, 0, 0, 0.78); /* Цвет модального фона для темной темы */
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      color: var(--text-color);
+      background-color: var(--bg-color);
+      min-height: 100vh;
+      transition: background 0.5s, color 0.3s;
+      background: var(--gradient);
+      background-attachment: fixed;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.5;
+    }
+
+    /* HEADER STYLES */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background: var(--gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      font-weight: 900;
+      font-size: 1.5rem;
+      letter-spacing: 0.01em;
+      user-select: none;
+      box-shadow: 0 3px 32px rgba(150, 8, 8, 0.28);
+      z-index: 2003;
+      backdrop-filter: var(--glass-blur);
+    }
+
+    .header-controls {
+      display: flex;
+      gap: 0.8rem;
+      align-items: center;
+    }
+
+    #menu-toggle {
+      cursor: pointer;
+      font-size: 1.5rem;
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      padding: 0.5rem;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      transition: all var(--transition);
+    }
+
+    #menu-toggle:hover {
+      background: var(--accent-color);
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    .header-btn {
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+      font-weight: 700;
+      font-size: 0.95rem;
+      border-radius: 10px;
+      padding: 0.4rem 1rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      box-shadow: 0 2px 10px rgba(100, 0, 0, 0.19);
+      line-height: 1.35;
+      backdrop-filter: var(--blur);
+      will-change: background, color, box-shadow, border;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .header-btn:hover,
+    .header-btn.active {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: #fff;
+      box-shadow: 0 4px 16px rgba(244, 67, 54, 0.35);
+    }
+
+    /* SIDEBAR STYLES */
+    #sidebar {
+      width: var(--sidebar-width);
+      min-width: 175px;
+      background: var(--card-bg-blur);
+      border-left: 1.5px solid var(--border-color);
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      padding: 1.6rem 1rem;
+      position: fixed;
+      top: 0;
+      right: -240px;
+      bottom: 0;
+      box-shadow: var(--sidebar-shadow);
+      z-index: 1002;
+      backdrop-filter: var(--glass-blur);
+      border-top-left-radius: 24px;
+      user-select: none;
+      transition: right 0.5s;
+    }
+
+    #sidebar.open {
+      right: 0;
+    }
+
+    .sidebar-btn {
+      background: none;
+      border: none;
+      color: var(--text-color);
+      text-align: left;
+      padding: 0.9rem 1.3rem;
+      font-size: 1.1rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      transition: all var(--transition);
+      outline: none;
+      width: 100%;
+    }
+
+    .sidebar-btn.active,
+    .sidebar-btn:hover {
+      background: var(--accent-color);
+      color: #fff;
+      box-shadow: 0 0 24px 2px rgba(180, 0, 0, 0.35);
+      transform: translateX(-5px);
+    }
+
+    /* MAIN CONTENT */
+    main {
+      margin-right: var(--sidebar-width);
+      padding: calc(var(--header-height) + 1.5rem) 3vw 2vw 3vw;
+      max-width: 1130px;
+      min-height: 90vh;
+      user-select: text;
+      transition: margin 0.3s;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    section {
+      display: none;
+      animation: fadeIn 0.7s;
+      width: 100%;
+    }
+
+    section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* FORM STYLES */
+    .tag-filter {
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-wrap: wrap;
+    }
+
+    #tag-filter-select {
+      min-width: 150px;
+      min-height: 100px;
+      padding: 0.35rem 0.7rem;
+      border-radius: 11px;
+      border: 2px solid var(--border-color);
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      font-size: 1.01rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      user-select: none;
+      outline: none;
+    }
+
+    #tag-filter-select:focus,
+    #tag-filter-select:hover {
+      border-color: var(--accent-color);
+      outline: none;
+      box-shadow: 0 0 12px 2px rgba(198, 40, 40, 0.35);
+      background: var(--accent-color-hover);
+      color: #fff;
+    }
+
+    .form-section {
+      background: var(--card-bg-blur);
+      backdrop-filter: var(--blur);
+      border-radius: 20px;
+      padding: 1.5rem 2rem;
+      margin-bottom: 2.5rem;
+      border: 1.3px solid var(--border-color);
+      box-shadow: var(--shadow-light);
+      animation: fadeIn 0.81s;
+      position: relative;
+      transition: box-shadow var(--transition), background var(--transition);
+    }
+
+    .form-section h3 {
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+      color: var(--accent-color);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .form-section:focus-within {
+      box-shadow: 0 6px 38px 0 rgba(180, 0, 0, 0.45);
+      z-index: 222;
+    }
+
+    textarea#suggested-news,
+    .form-section textarea,
+    .form-section input,
+    .form-section select {
+      width: 100%;
+      margin-top: 0.5rem;
+      padding: 0.9rem 1.2rem;
+      border: 1.8px solid var(--border-color);
+      border-radius: 12px;
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      font-size: 1rem;
+      font-weight: 500;
+      resize: vertical;
+      transition: all var(--transition);
+      font-family: var(--font-primary);
+      box-shadow: 0 1.5px 7px 0 rgba(100, 0, 0, 0.14) inset;
+    }
+
+    .form-section input:focus,
+    .form-section textarea:focus,
+    .form-section select:focus {
+      border-color: var(--accent-color);
+      outline: none;
+      background: var(--card-bg);
+      box-shadow: 0 0 16px rgba(198, 40, 40, 0.35);
+    }
+
+    .form-btn {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      margin-top: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 3px 12px rgba(180, 0, 0, 0.35);
+    }
+
+    .form-btn:hover {
+      background: var(--accent-color-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(180, 0, 0, 0.45);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .editor-toolbar {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+      background: var(--card-bg-blur);
+      border-radius: 12px;
+      padding: 8px 12px;
+      border: 1.2px solid var(--border-color);
+      box-shadow: 0 0 6px 1px rgba(150, 0, 0, 0.18) inset;
+    }
+
+    .editor-toolbar button {
+      background: var(--card-bg-blur);
+      border: 1px solid var(--border-color);
+      color: var(--text-color);
+      border-radius: 8px;
+      padding: 0.5rem 0.8rem;
+      font-size: 1.05rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 36px;
+      min-height: 36px;
+    }
+
+    .editor-toolbar button:hover,
+    .editor-toolbar button:focus {
+      background: var(--accent-color);
+      color: #fff;
+      border-color: #fff;
+      transform: scale(1.08);
+    }
+
+    /* NEWS STYLES */
+    .news {
+      background: var(--card-bg-blur);
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      border-left: 8px solid var(--accent-color);
+      border-radius: 18px;
+      box-shadow: var(--shadow-light);
+      position: relative;
+      transition: all var(--transition);
+      cursor: pointer;
+      animation: fadeIn 1.2s;
+      backdrop-filter: var(--blur);
+    }
+
+    .news:hover {
+      transform: translateY(-3px) scale(1.015);
+      box-shadow: var(--shadow-hover);
+      border-left-color: var(--accent-color-hover);
+    }
+
+    .news-tag {
+      font-weight: 800;
+      color: var(--accent-color);
+      font-size: 1.15rem;
+      margin-bottom: 0.8rem;
+      user-select: none;
+      letter-spacing: 0.045em;
+      background: rgba(198, 40, 40, 0.15);
+      border-radius: 8px;
+      padding: 0.3rem 1rem;
+      display: inline-block;
+      box-shadow: 0 2px 8px 0 rgba(180, 0, 0, 0.25);
+    }
+
+    .news time {
+      font-size: 0.9rem;
+      color: var(--border-color);
+      font-style: italic;
+      display: block;
+      margin-top: 1.2rem;
+      user-select: none;
+    }
+
+    .news .actions {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .news .actions button {
+      font-size: 0.95rem;
+      background: var(--accent-color);
+      border: none;
+      color: white;
+      padding: 0.5rem 1.2rem;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 2px 8px 0 rgba(180, 0, 0, 0.35);
+      transition: all var(--transition);
+      outline: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .news .actions button:hover {
+      background: var(--accent-color-hover);
+      box-shadow: 0 4px 14px 0 rgba(180, 0, 0, 0.45);
+      transform: translateY(-2px);
+    }
+
+    /* MODAL STYLES */
+    #preview-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--modal-bg);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      user-select: none;
+      will-change: backdrop-filter, background;
+      animation: fadeIn 0.6s;
+      backdrop-filter: var(--glass-blur);
+    }
+
+    #preview-content {
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      padding: 2.5rem;
+      border-radius: 26px;
+      max-width: min(90vw, 800px);
+      max-height: 85vh;
+      overflow-y: auto;
+      box-shadow: 0 0 44px 7px rgba(180, 0, 0, 0.55);
+      user-select: text;
+      backdrop-filter: var(--blur);
+      border: 2px solid var(--accent-color);
+      position: relative;
+      margin: 0.2rem auto;
+    }
+
+    #preview-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: transparent;
+      border: none;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      cursor: pointer;
+      transition: color 0.21s;
+      z-index: 222;
+      line-height: 1;
+    }
+
+    #preview-close:hover {
+      color: var(--accent-color-hover);
+      transform: scale(1.1);
+    }
+
+    /* LOGIN PANEL */
+    #login-panel {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 20px;
+      box-shadow: 0 0 35px rgba(0, 0, 0, 0.45), 0 0 15px var(--accent-color-hover);
+      z-index: 10000;
+      user-select: none;
+      width: min(90vw, 350px);
+      backdrop-filter: var(--blur);
+      border: 2px solid var(--accent-color);
+    }
+
+    #login-panel h3 {
+      color: var(--accent-color);
+      font-size: 1.7rem;
+      font-weight: 800;
+      text-align: center;
+      margin: 0 0 1.5rem 0;
+      letter-spacing: 0.04em;
+    }
+
+    #login-panel input {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      margin-bottom: 1.5rem;
+      border-radius: 12px;
+      border: 2px solid var(--border-color);
+      background: var(--card-bg-blur);
+      color: var(--text-color);
+      font-size: 1.05rem;
+      transition: all var(--transition);
+    }
+
+    #login-panel input:focus {
+      border-color: var(--accent-color);
+      outline: none;
+      box-shadow: 0 0 16px rgba(198, 40, 40, 0.35);
+    }
+
+    .btns {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
+
+    .btns button {
+      padding: 0.7rem 1.5rem;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+
+    .btns button:first-child {
+      background: var(--accent-color);
+      color: white;
+      border: none;
+    }
+
+    .btns button:first-child:hover {
+      background: var(--accent-color-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(180, 0, 0, 0.35);
+    }
+
+    .btns button:last-child {
+      background: transparent;
+      color: var(--text-color);
+      border: 2px solid var(--border-color);
+    }
+
+    .btns button:last-child:hover {
+      background: rgba(180, 0, 0, 0.15);
+    }
+
+    /* SUGGESTIONS */
+    #suggestions-list {
+      max-height: 500px;
+      overflow-y: auto;
+      margin-top: 1rem;
+      border: 1.5px solid var(--border-color);
+      border-radius: 16px;
+      background: var(--card-bg-blur);
+      box-shadow: var(--shadow-light);
+      user-select: text;
+      backdrop-filter: var(--blur);
+    }
+
+    .suggestion-item {
+      border-bottom: 1.5px solid var(--border-color);
+      padding: 1.5rem;
+      position: relative;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      word-break: break-word;
+    }
+
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+
+    .suggestion-actions {
+      margin-top: 1.2rem;
+      display: flex;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .suggestion-actions button {
+      background: var(--accent-color);
+      border: none;
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 10px;
+      padding: 0.5rem 1.2rem;
+      cursor: pointer;
+      transition: all var(--transition);
+      user-select: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .suggestion-actions button:hover {
+      background: var(--accent-color-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(180, 0, 0, 0.35);
+    }
+
+    /* NOTIFICATIONS */
+    #notifications-container {
+      position: fixed;
+      top: 5rem;
+      right: 2vw;
+      max-width: 350px;
+      z-index: 11001;
+      user-select: none;
+    }
+
+    .notification {
+      background: var(--accent-color);
+      color: #fff;
+      padding: 1.2rem 1.8rem;
+      margin-bottom: 1.2rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.32);
+      font-weight: 800;
+      font-size: 1.15rem;
       opacity: 0;
-      transform: translateX(100%);
+      transform: translateX(120%);
+      animation: slideIn 0.52s forwards;
+      user-select: none;
+      will-change: transform, opacity;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
     }
-  }
-</style>
+
+    .notification.success {
+      background: var(--success-color);
+    }
+
+    .notification.error {
+      background: var(--accent-color-hover);
+    }
+
+    .notification.info {
+      background: var(--info-color);
+    }
+
+    @keyframes slideIn {
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideOut {
+      to {
+        opacity: 0;
+        transform: translateX(130%);
+      }
+    }
+
+    /* RESPONSIVE ADJUSTMENTS */
+    @media (max-width: 920px) {
+      #sidebar {
+        width: 280px;
+        padding: 1.2rem 0.8rem;
+      }
+
+      header {
+        padding: 0 1rem;
+      }
+
+      .header-btn span {
+        display: none;
+      }
+
+      .header-btn {
+        padding: 0.5rem;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+      }
+
+      main {
+        padding: calc(var(--header-height) + 1rem) 2vw 2vw 2vw;
+      }
+    }
+
+    @media (max-width: 700px) {
+      #sidebar {
+        width: 100%;
+        max-width: 300px;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 24px;
+      }
+
+      main {
+        margin-right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+      }
+
+      .tag-filter {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+
+      #tag-filter-select {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 500px) {
+      header {
+        font-size: 1.3rem;
+        padding: 0 0.8rem;
+      }
+
+      .header-controls {
+        gap: 0.5rem;
+      }
+
+      .form-section,
+      .news {
+        padding: 1.2rem;
+      }
+
+      .form-section h3 {
+        font-size: 1.25rem;
+      }
+
+      .editor-toolbar {
+        padding: 6px;
+      }
+
+      .editor-toolbar button {
+        padding: 0.4rem;
+        font-size: 0.95rem;
+      }
+
+      #preview-content {
+        padding: 1.5rem;
+      }
+
+      #login-panel {
+        padding: 1.8rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
-
-<aside>
-  <button onclick="showTab(event, 'news')" class="active" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
-  <button onclick="showTab(event, 'submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
-  <button onclick="showTab(event, 'admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn" style="display:none;">⚙️ Адмін</button>
-</aside>
-
-<header>
-  ТСН Новини
-  <div style="display:flex; align-items:center;">
-    <button id="login-btn" onclick="showLoginPanel()" title="Вхід для копірайтера">Вхід</button>
-    <button id="notification-toggle" title="Включити/вимкнути повідомлення">Увімкнути повідомлення</button>
-  </div>
-</header>
-
-<main>
-  <section id="news" class="active" role="tabpanel" aria-labelledby="news-tab-btn">
-    <div class="tag-filter">
-      <label for="tag-filter-select">Фільтр за тегом:</label>
-      <select id="tag-filter-select" onchange="renderNews(this.value)" aria-controls="news-feed" aria-label="Фільтр новин за тегом">
-        <option value="all">Всі</option>
-        <option value="Політика">Політика</option>
-        <option value="Спорт">Спорт</option>
-        <option value="Культура">Культура</option>
-        <option value="ГРП">ГРП</option>
-        <option value="Робота Держ.структур">Робота Держ.структур</option>
-        <option value="Фотосесія">Фотосесія</option>
-        <option value="Конкурс">Конкурс</option>
-        <option value="Важливе">Важливе</option>
-      </select>
+  <header>
+    <button id="menu-toggle" onclick="toggleSidebar()" aria-label="Відкрити меню">☰</button>
+    <span>ТСН Новини</span>
+    <div class="header-controls">
+      <button id="theme-toggle-btn" class="header-btn" title="Змінити тему">🌗</button>
+      <button id="login-btn" class="header-btn" onclick="showLoginPanel()" title="Вхід для копірайтера">🔑</button>
+      <button id="notification-toggle" class="header-btn" title="Увімкнути/вимкнути повідомлення">🔔</button>
     </div>
-    <div id="news-feed" aria-live="polite" aria-relevant="additions"></div>
-    <button style="background:#b71c1c; margin-top:2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини" hidden>Видалити всі новини</button>
-  </section>
+  </header>
 
-  <section id="submit" role="tabpanel" aria-labelledby="submit-tab-btn">
-    <div class="form-section">
-      <h3>Запропоновані новини</h3>
-      <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
-    </div>
-  </section>
+  <aside id="sidebar">
+    <button class="sidebar-btn active" onclick="showTab(event, 'news')" aria-controls="news" aria-selected="true" role="tab" id="news-tab-btn">📰 Новини</button>
+    <button class="sidebar-btn" onclick="showTab(event, 'submit')" aria-controls="submit" aria-selected="false" role="tab" id="submit-tab-btn">📨 Запропоновані</button>
+    <button class="sidebar-btn" onclick="showTab(event, 'admin')" aria-controls="admin" aria-selected="false" role="tab" id="admin-tab-btn" style="display:none;">⚙️ Адмін</button>
+  </aside>
 
-  <section id="admin" class="admin-section" role="tabpanel" aria-labelledby="admin-tab-btn">
-    <div class="form-section">
-      <h3>Публікація новини</h3>
-      <div id="editor" contenteditable="true" aria-label="Редактор новини" role="textbox" spellcheck="true"></div>
-      <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" style="margin-top: 0.5rem;"/>
-      <img id="preview-image" alt="Прев'ю зображення" />
-      <label for="tag-select" style="margin-top:1rem; display:block; font-weight:600;">Виберіть тег новини:</label>
-      <select id="tag-select" aria-label="Вибір тегу новини">
-        <option value="Політика">Політика</option>
-        <option value="Спорт">Спорт</option>
-        <option value="Культура">Культура</option>
-        <option value="ГРП">ГРП</option>
-        <option value="Робота Держ.структур">Робота Держ.структур</option>
-        <option value="Фотосесія">Фотосесія</option>
-        <option value="Конкурс">Конкурс</option>
-        <option value="Важливе">Важливе</option>
-      </select>
-      <button onclick="publishNews()">Опублікувати</button>
-      <button onclick="showPreview()">Перегляд</button>
-    </div>
-  </section>
-</main>
+  <main>
+    <section id="news" class="active" role="tabpanel" aria-labelledby="news-tab-btn">
+      <div class="tag-filter">
+        <label for="tag-filter-select">Фільтр за тегом:</label>
+        <select id="tag-filter-select" multiple size="5" onchange="renderNewsByTags(this)" aria-controls="news-feed" aria-label="Фільтр новин за тегом">
+          <option value="all">Всі</option>
+          <option value="Політика">Політика</option>
+          <option value="Спорт">Спорт</option>
+          <option value="Культура">Культура</option>
+          <option value="ГРП">ГРП</option>
+          <option value="Робота Держ.структур">Робота Держ.структур</option>
+          <option value="Фотосесія">Фотосесія</option>
+          <option value="Конкурс">Конкурс</option>
+          <option value="Важливе">Важливе</option>
+        </select>
+      </div>
+      
+      <div class="form-section">
+        <h3>✍️ Запропонуйте свою новину</h3>
+        <textarea id="suggested-news" placeholder="Ваша ідея новини..." rows="3"></textarea>
+        <button class="form-btn" onclick="submitSuggestion()">Надіслати пропозицію</button>
+      </div>
+      
+      <div id="news-feed" aria-live="polite" aria-relevant="additions"></div>
+      
+      <button class="form-btn" style="background: #8e0000; margin-top: 2rem;" id="delete-all-btn" onclick="deleteAllNews()" title="Видалити всі новини" hidden>
+        🗑️ Видалити всі новини
+      </button>
+    </section>
 
-<div id="preview-modal" onclick="hidePreview(event)" role="dialog" aria-modal="true" aria-labelledby="preview-tag" aria-describedby="preview-text">
-  <div id="preview-content">
-    <button id="preview-close" onclick="hidePreview(event)" aria-label="Закрити перегляд">×</button>
-    <div class="news-tag" id="preview-tag"></div>
-    <div id="preview-text"></div>
-    <time id="preview-date"></time>
-  </div>
-</div>
+    <section id="submit" role="tabpanel" aria-labelledby="submit-tab-btn">
+      <div class="form-section">
+        <h3>📨 Запропоновані новини</h3>
+        <div id="suggestions-list" aria-live="polite" aria-relevant="additions"></div>
+      </div>
+    </section>
 
-<div id="login-panel" role="dialog" aria-modal="true" aria-labelledby="login-title">
-  <h3 id="login-title">Вхід копірайтера</h3>
-  <input id="writer-pass" type="password" placeholder="Введіть пароль" autocomplete="current-password" aria-label="Пароль копірайтера" />
-  <div class="btns">
-    <button onclick="loginWriter()">Увійти</button>
-    <button onclick="closeLoginPanel()">Відміна</button>
-  </div>
-</div>
-
-<div id="notifications-container" aria-live="polite" aria-atomic="true"></div>
-
-<script>
-  const newsFeed = document.getElementById('news-feed');
-  const editor = document.getElementById('editor');
-  const previewImageElem = document.getElementById('preview-image');
-  const tagSelect = document.getElementById('tag-select');
-  const tagFilterSelect = document.getElementById('tag-filter-select');
-  const previewModal = document.getElementById('preview-modal');
-  const previewText = document.getElementById('preview-text');
-  const previewTag = document.getElementById('preview-tag');
-  const previewDate = document.getElementById('preview-date');
-  const loginPanel = document.getElementById('login-panel');
-  const loginBtn = document.getElementById('login-btn');
-  const adminTabBtn = document.getElementById('admin-tab-btn');
-  const deleteAllBtn = document.getElementById('delete-all-btn');
-  const notificationToggle = document.getElementById('notification-toggle');
-  const suggestionsList = document.getElementById('suggestions-list');
-
-  const CORRECT_PASSWORD = 'tsn2025';
-  let channel = new BroadcastChannel("news_channel");
-
-  let isWriterLoggedIn = false;
-  let notificationsEnabled = false;
-
-  // --- Локал сторедж ключі ---
-  const STORAGE_KEYS = {
-    news: 'publishedNews',
-    suggestions: 'suggestions',
-    theme: 'userTheme',
-    login: 'writerLoggedIn',
-    notifications: 'notificationsEnabled',
-    lastNewsTimestamp: 'lastNewsTimestamp'
-  };
-
-  function generateId() {
-    return 'id-' + Math.random().toString(36).substr(2, 9);
-  }
-
-  function loadNews() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.news) || '[]');
-  }
-
-  function saveNews(news) {
-    localStorage.setItem(STORAGE_KEYS.news, JSON.stringify(news));
-  }
-
-  function loadSuggestions() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.suggestions) || '[]');
-  }
-
-  function saveSuggestions(suggestions) {
-    localStorage.setItem(STORAGE_KEYS.suggestions, JSON.stringify(suggestions));
-  }
-
-  function renderNews(filterTag = 'all') {
-    newsFeed.innerHTML = '';
-    let allNews = loadNews();
-    if(filterTag !== 'all'){
-      allNews = allNews.filter(n => n.tag === filterTag);
-    }
-    allNews.sort((a,b) => new Date(b.date) - new Date(a.date));
-    if(allNews.length === 0) {
-      newsFeed.innerHTML = `<p style="text-align:center; color:gray; margin-top:2rem; user-select:none;">Новин немає.</p>`;
-    }
-    allNews.forEach(n => {
-      const div = document.createElement('div');
-      div.className = 'news';
-      div.dataset.id = n.id;
-      div.innerHTML = `
-        <div class="news-tag">${n.tag}</div>
-        <div>${n.html}</div>
-        <time>${new Date(n.date).toLocaleString('uk-UA')}</time>
-        <div class="actions">
-          <button onclick="copyLink('${n.id}')">Копіювати посилання</button>
-          ${isWriterLoggedIn ? `<button onclick="deleteNews('${n.id}')">Видалити</button>` : ''}
-          <button onclick="previewNews('${n.id}')">Перегляд</button>
+    <section id="admin" class="admin-section" role="tabpanel" aria-labelledby="admin-tab-btn">
+      <div class="form-section">
+        <h3>📝 Публікація новини</h3>
+        
+        <div class="editor-toolbar" id="editor-toolbar">
+          <button type="button" title="Жирний (Ctrl+B)" onclick="format('bold')"><b>B</b></button>
+          <button type="button" title="Курсив (Ctrl+I)" onclick="format('italic')"><i>I</i></button>
+          <button type="button" title="Підкреслення (Ctrl+U)" onclick="format('underline')"><u>U</u></button>
+          <button type="button" title="Списoк" onclick="format('insertUnorderedList')">• Список</button>
+          <button type="button" title="Заголовок" onclick="format('formatBlock','H3')"><span style="font-weight: 900;">H</span>3</button>
+          <button type="button" title="Посилання" onclick="createLink()">🔗</button>
+          <button type="button" title="Вставити зображення" onclick="promptImage()">🖼️</button>
+          <button type="button" title="Очистити формат" onclick="format('removeFormat')">✕</button>
         </div>
-      `;
-      newsFeed.appendChild(div);
+        
+        <div id="editor" contenteditable="true" aria-label="Редактор новини" role="textbox" spellcheck="true" style="min-height: 150px; padding: 1rem; border: 1px solid var(--border-color); border-radius: 12px;"></div>
+        
+        <label for="image-upload" style="margin-top: 1.2rem; display: block; font-weight: 600; color: var(--accent-color);">
+          🖼️ Завантажити зображення:
+        </label>
+        <input type="file" id="image-upload" accept="image/*" onchange="previewImage(event)" />
+        <img id="preview-image" alt="Прев'ю зображення" style="max-width: 100%; display: none; border-radius: 12px; margin: 1rem 0; border: 2px solid var(--border-color);" />
+        
+        <label for="tag-select" style="margin-top: 1.2rem; display: block; font-weight: 600; color: var(--accent-color);">
+          🏷️ Виберіть тег новини:
+        </label>
+        <select id="tag-select" aria-label="Вибір тегу новини" style="margin-bottom: 1.5rem;">
+          <option value="Політика">Політика</option>
+          <option value="Спорт">Спорт</option>
+          <option value="Культура">Культура</option>
+          <option value="ГРП">ГРП</option>
+          <option value="Робота Держ.структур">Робота Держ.структур</option>
+          <option value="Фотосесія">Фотосесія</option>
+          <option value="Конкурс">Конкурс</option>
+          <option value="Важливе">Важливе</option>
+        </select>
+        
+        <div class="btn-group">
+          <button class="form-btn" onclick="publishNews()">📢 Опублікувати</button>
+          <button class="form-btn" onclick="showPreview()">👁️ Перегляд</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="preview-modal" onclick="hidePreview(event)" role="dialog" aria-modal="true" aria-labelledby="preview-tag" aria-describedby="preview-text">
+    <div id="preview-content">
+      <button id="preview-close" onclick="hidePreview(event)" aria-label="Закрити перегляд">×</button>
+      <div class="news-tag" id="preview-tag"></div>
+      <div id="preview-text"></div>
+      <time id="preview-date"></time>
+    </div>
+  </div>
+
+  <div id="login-panel" role="dialog" aria-modal="true" aria-labelledby="login-title">
+    <h3 id="login-title">🔒 Вхід копірайтера</h3>
+    <input id="writer-pass" type="password" placeholder="Введіть пароль" autocomplete="current-password" aria-label="Пароль копірайтера" />
+    <div class="btns">
+      <button onclick="loginWriter()">Увійти</button>
+      <button onclick="closeLoginPanel()">Відміна</button>
+    </div>
+  </div>
+
+  <div id="notifications-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script>
+    // Переключение боковой панели
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('open');
+    }
+
+    // ---- RICH TEXT TOOLBAR ----
+    function format(cmd, param) {
+      document.execCommand(cmd, false, param);
+      document.getElementById('editor').focus();
+    }
+
+    function createLink() {
+      let url = prompt("Вставте посилання (URL):", "https://");
+      if (url) document.execCommand("createLink", false, url.trim());
+    }
+
+    function promptImage() {
+      let url = prompt("URL зображення:");
+      if (url) document.execCommand("insertImage", false, url.trim());
+    }
+
+    document.getElementById("editor").addEventListener("keydown", e => {
+      if (e.ctrlKey && e.key.toLowerCase() === "b") { format('bold'); e.preventDefault(); }
+      if (e.ctrlKey && e.key.toLowerCase() === "i") { format('italic'); e.preventDefault(); }
+      if (e.ctrlKey && e.key.toLowerCase() === "u") { format('underline'); e.preventDefault(); }
     });
-    deleteAllBtn.hidden = !isWriterLoggedIn || loadNews().length === 0;
-  }
 
-  function copyLink(id) {
-    const url = new URL(window.location.href);
-    url.hash = id;
-    navigator.clipboard.writeText(url.toString()).then(() => {
-      notify('Посилання скопійовано в буфер обміну!', 'success');
-    });
-  }
-
-  function deleteNews(id) {
-    if(confirm('Ви впевнені, що хочете видалити цю новину?')){
-      let allNews = loadNews();
-      allNews = allNews.filter(n => n.id !== id);
-      saveNews(allNews);
-      renderNews(tagFilterSelect.value);
-      notify('Новина видалена', 'info');
-      updateLastNewsTimestamp();
-    }
-  }
-
-  function deleteAllNews() {
-    if(!isWriterLoggedIn) {
-      alert('Для видалення всіх новин необхідний вхід копірайтера.');
-      return;
-    }
-    if(confirm('Ви впевнені, що хочете повністю видалити всі новини? Цю дію не можна скасувати.')) {
-      localStorage.removeItem(STORAGE_KEYS.news);
-      renderNews(tagFilterSelect.value);
-      notify('Всі новини видалені', 'info');
-      updateLastNewsTimestamp();
-    }
-  }
-
-  function previewNews(id) {
-    const allNews = loadNews();
-    const news = allNews.find(n => n.id === id);
-    if(news){
-      previewTag.textContent = news.tag;
-      previewText.innerHTML = news.html;
-      previewDate.textContent = new Date(news.date).toLocaleString('uk-UA');
-      previewModal.style.display = 'flex';
-      previewModal.focus();
-    }
-  }
-
-  function hidePreview(event) {
-    if(event.target === previewModal || event.target.id === 'preview-close'){
-      previewModal.style.display = 'none';
-    }
-  }
-
-  function addNews(html, dateStr, tag) {
-    const news = loadNews();
-    const newNews = {id: generateId(), html, date: dateStr, tag};
-    news.push(newNews);
-    saveNews(news);
-    renderNews(tagFilterSelect.value);
-    notify('Новина опублікована!', 'success');
-    updateLastNewsTimestamp();
-    channel.postMessage(JSON.stringify(newNews));
-  }
-
-  // Предложения новостей - Рендер, удаление и публикация из предложенных
-  function renderSuggestions() {
-    suggestionsList.innerHTML = '';
-    const suggestions = loadSuggestions();
-    if(suggestions.length === 0) {
-      suggestionsList.innerHTML = `<p style="text-align:center; color:gray; margin-top:2rem; user-select:none;">Немає пропозицій.</p>`;
-      return;
-    }
-    suggestions.forEach((s, idx) => {
-      const div = document.createElement('div');
-      div.className = 'suggestion-item';
-      div.dataset.idx = idx;
-      div.textContent = s;
-      const actions = document.createElement('div');
-      actions.className = 'suggestion-actions';
-
-      // Кнопка опубликовать (в админке, доступна только после входа)
-      if(isWriterLoggedIn){
-        const pubBtn = document.createElement('button');
-        pubBtn.textContent = 'Опублікувати';
-        pubBtn.title = 'Опублікувати цю пропозицію як новину';
-        pubBtn.onclick = () => {
-          publishSuggestion(idx);
-        };
-        actions.appendChild(pubBtn);
-      }
-
-      // Кнопка удалить
-      const delBtn = document.createElement('button');
-      delBtn.textContent = 'Видалити';
-      delBtn.title = 'Видалити цю пропозицію';
-      delBtn.onclick = () => {
-        deleteSuggestion(idx);
-      };
-      actions.appendChild(delBtn);
-
-      div.appendChild(actions);
-      suggestionsList.appendChild(div);
-    });
-  }
-
-  // Публикация предложения как новости
-  function publishSuggestion(idx) {
-    const suggestions = loadSuggestions();
-    if(idx < 0 || idx >= suggestions.length) return;
-
-    // Для новости: берем текст, ставим текущую дату, тег "Важливе" по умолчанию (можно поменять)
-    const text = suggestions[idx];
-    if(!text.trim()) {
-      notify('Пропозиція порожня', 'error');
-      return;
-    }
-    // Добавляем как новость с тегом "Важливе"
-    addNews(escapeHtml(text).replace(/\n/g, '<br>'), new Date().toISOString(), "Важливе");
-    // Удаляем предложение
-    suggestions.splice(idx, 1);
-    saveSuggestions(suggestions);
-    renderSuggestions();
-  }
-
-  // Удаление предложения
-  function deleteSuggestion(idx) {
-    const suggestions = loadSuggestions();
-    if(idx < 0 || idx >= suggestions.length) return;
-    suggestions.splice(idx, 1);
-    saveSuggestions(suggestions);
-    renderSuggestions();
-    notify('Пропозицію видалено', 'info');
-  }
-
-  // Отправка предложения
-  function submitSuggestion() {
-    const text = document.getElementById('suggested-news').value.trim();
-    if (text) {
-      const suggestions = loadSuggestions();
-      suggestions.push(text);
-      saveSuggestions(suggestions);
-      document.getElementById('suggested-news').value = '';
-      notify('Дякуємо за вашу пропозицію!', 'success');
-      renderSuggestions();
-    } else {
-      notify('Введіть текст пропозиції.', 'error');
-    }
-  }
-
-  function loginWriter() {
-    const pass = document.getElementById('writer-pass').value;
-    if (pass === CORRECT_PASSWORD) {
-      isWriterLoggedIn = true;
-      localStorage.setItem(STORAGE_KEYS.login, 'true');
-      alert('Вхід успішний!');
-      loginPanel.style.display = 'none';
-      loginBtn.style.display = 'none';
-      adminTabBtn.style.display = 'inline-flex';
-      deleteAllBtn.hidden = false;
-      renderNews(tagFilterSelect.value);
-      renderSuggestions();
-      notify('Ви увійшли як копірайтер', 'success');
-    } else {
-      notify('Невірний пароль', 'error');
-    }
-  }
-
-  function showLoginPanel() {
-    loginPanel.style.display = 'block';
-    document.getElementById('writer-pass').value = '';
-    document.getElementById('writer-pass').focus();
-  }
-
-  function closeLoginPanel() {
-    loginPanel.style.display = 'none';
-  }
-
-  function publishNews() {
-    const html = editor.innerHTML.trim();
-    const tag = tagSelect.value;
-    const dateStr = new Date().toISOString();
-    if (html.length === 0) {
-      notify('Новина не може бути порожньою', 'error');
-      return;
-    }
-    addNews(html, dateStr, tag);
-    editor.innerHTML = '';
-    previewImageElem.style.display = 'none';
-    previewImageElem.src = '';
-  }
-
-  function showPreview() {
-    const html = editor.innerHTML.trim();
-    const tag = tagSelect.value;
-    if (!html) {
-      notify('Текст новини порожній', 'error');
-      return;
-    }
-    previewTag.textContent = tag;
-    previewText.innerHTML = html;
-    previewDate.textContent = new Date().toLocaleString('uk-UA');
-    previewModal.style.display = 'flex';
-  }
-
-  function previewImage(event) {
-    const file = event.target.files[0];
-    if(file){
+    function previewImage(event) {
+      const f = event.target.files[0];
+      if (!f) return;
       const reader = new FileReader();
-      reader.onload = () => {
-        previewImageElem.src = reader.result;
-        previewImageElem.style.display = 'block';
-        editor.innerHTML += `<br><img src="${reader.result}" style="max-width:100%; border-radius:6px;">`;
+      reader.onload = function (e) {
+        const img = document.getElementById("preview-image");
+        img.src = e.target.result;
+        img.style.display = "block";
+
+        // Дублирование изображения исправлено
+        const imgElem = document.createElement('img');
+        imgElem.src = e.target.result;
+        imgElem.style.maxWidth = "100%";
+        imgElem.style.borderRadius = "12px";
+        imgElem.style.marginTop = "1rem";
+        document.getElementById('editor').innerHTML += "<br>" + imgElem.outerHTML;
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(f);
     }
-  }
 
-  // Тема + сохранение
-  function loadTheme() {
-    const savedTheme = localStorage.getItem(STORAGE_KEYS.theme);
-    if(savedTheme === 'dark' || savedTheme === 'light'){
-      document.documentElement.setAttribute('data-theme', savedTheme);
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
+    // ---- Табы/панели ----
+    function showTab(e, tab) {
+      for (const btn of document.querySelectorAll('aside button')) btn.classList.remove('active');
+      e.currentTarget.classList.add('active');
+      for (const s of document.querySelectorAll('main>section')) s.classList.remove('active');
+      document.getElementById(tab).classList.add('active');
     }
-  }
-  function saveTheme(theme) {
-    localStorage.setItem(STORAGE_KEYS.theme, theme);
-  }
-  function toggleTheme() {
-    const theme = document.documentElement.getAttribute('data-theme');
-    if(theme === 'dark'){
-      document.documentElement.setAttribute('data-theme', 'light');
-      saveTheme('light');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'dark');
-      saveTheme('dark');
-    }
-  }
 
-  // Отображение вкладок
-  function showTab(evt, tabName) {
-    // Вкладки
-    document.querySelectorAll('aside button').forEach(btn => {
-      btn.classList.remove('active');
-      btn.setAttribute('aria-selected', 'false');
+    function showLoginPanel() {
+      document.getElementById('login-panel').style.display = 'block';
+      document.getElementById('writer-pass').focus();
+    }
+
+    function closeLoginPanel() { document.getElementById('login-panel').style.display = 'none'; }
+
+    function loginWriter() {
+      let pass = document.getElementById('writer-pass').value.trim();
+      if (pass === "admin") {
+        showNotification("Авторизовано 👑", "success");
+        document.getElementById("admin-tab-btn").style.display = "";
+        showTab({ currentTarget: document.getElementById('admin-tab-btn') }, 'admin');
+        closeLoginPanel();
+      } else showNotification("Невірний пароль!", "error");
+    }
+
+    window.onclick = function (e) { if (e.target === document.getElementById('login-panel')) closeLoginPanel(); };
+
+    // ---- ПРЕДЛОЖЕНИЯ (suggestions) ----
+    let suggestions = JSON.parse(localStorage.getItem('suggestions') || "[]");
+
+    function submitSuggestion() {
+      let text = document.getElementById('suggested-news').value.trim();
+      if (!text) { showNotification("Введіть пропозицію!", "error"); return; }
+      suggestions.push({ text, date: new Date().toLocaleString() });
+      localStorage.setItem('suggestions', JSON.stringify(suggestions));
+      document.getElementById('suggested-news').value = "";
+      showNotification("Дякуємо за пропозицію!", "success");
+      renderSuggestions();
+    }
+
+    function renderSuggestions() {
+      let list = document.getElementById('suggestions-list');
+      list.innerHTML = suggestions.length
+        ? suggestions.map((s, i) => `
+          <div class="suggestion-item">
+            <div style="margin-bottom: 0.8rem;">${s.text}</div>
+            <div class="suggestion-actions">
+              <button onclick="publishSuggestion(${i})">📢 Публікувати</button>
+              <button onclick="deleteSuggestion(${i})">🗑️ Видалити</button>
+            </div>
+            <div style="font-size: 0.9rem; color: var(--border-color); margin-top: 0.5rem;">${s.date}</div>
+          </div>
+        `).join('')
+        : '<div style="padding:1.5rem;color:var(--border-color);text-align:center;">Немає запропонованих новин.</div>';
+    }
+
+    function deleteSuggestion(i) {
+      if (confirm('Видалити цю пропозицію?')) {
+        suggestions.splice(i, 1);
+        localStorage.setItem('suggestions', JSON.stringify(suggestions));
+        renderSuggestions();
+      }
+    }
+
+    function publishSuggestion(i) {
+      let s = suggestions[i];
+      document.getElementById('editor').innerText = s.text;
+      showTab({ currentTarget: document.getElementById('admin-tab-btn') }, 'admin');
+      showNotification("Пропозицію завантажено в редактор", "info");
+    }
+
+    // --- ТЕМА Toggle ---
+    document.getElementById('theme-toggle-btn').onclick = () => {
+      let d = document.documentElement;
+      let now = d.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      d.setAttribute('data-theme', now);
+      localStorage.setItem('theme', now);
+      showNotification(`Тема змінена на ${now === 'dark' ? 'темну' : 'світлу'}`, "info");
+    };
+
+    (() => {
+      let saved = localStorage.getItem('theme');
+      if (saved) document.documentElement.setAttribute('data-theme', saved);
+    })();
+
+    // ---- ПУБЛИКАЦИЯ НОВОСТЕЙ (ADMIN) ----
+    let news = JSON.parse(localStorage.getItem('news') || '[]');
+
+    function publishNews() {
+      let tag = document.getElementById('tag-select').value;
+      let html = document.getElementById('editor').innerHTML.trim();
+      let img = document.getElementById('preview-image').src;
+      if (html.length < 10) { showNotification("Дуже коротка новина!", "error"); return; }
+      let item = {
+        tag,
+        html,
+        img: img.startsWith('data:') ? img : '',
+        date: new Date().toLocaleString()
+      };
+      news.unshift(item);
+      localStorage.setItem('news', JSON.stringify(news));
+      showNotification("Новину опубліковано!", "success");
+      document.getElementById('editor').innerHTML = "";
+      document.getElementById('preview-image').style.display = "none";
+      document.getElementById('preview-image').src = "";
+      renderNews();
+    }
+
+    function renderNews(list = news) {
+      let feed = document.getElementById('news-feed');
+      if (!feed) return;
+      feed.innerHTML = list.length
+        ? list.map((n, i) => `
+          <div class="news">
+            <div class="news-tag">${n.tag}</div>
+            <div class="news-text">${n.html}${n.img ? `<img src="${n.img}" style="width:97%;border-radius:12px;margin:12px 0 0 0;" />` : ""}</div>
+            <time>${n.date ?? ""}</time>
+            <div class="actions">
+              <button onclick="showPreviewFromFeed(${i})">👁️ Перегляд</button>
+              <button onclick="deleteNews(${i})">🗑️ Видалити</button>
+            </div>
+          </div>
+        `).join('')
+        : '<div style="padding:1.5rem;color:var(--border-color);text-align:center;">Поки що новин немає.</div>';
+      document.getElementById('delete-all-btn').hidden = !list.length;
+    }
+
+    function deleteNews(i) {
+      if (confirm('Видалити новину?')) {
+        news.splice(i, 1);
+        localStorage.setItem('news', JSON.stringify(news));
+        renderNews();
+      }
+    }
+
+    function deleteAllNews() {
+      if (confirm('Видалити всі новини безповоротно?')) {
+        news = []; localStorage.removeItem('news'); renderNews();
+      }
+    }
+
+    // --- Теги фильтр ---
+    function renderNewsByTags(sel) {
+      if (!sel) sel = document.getElementById('tag-filter-select');
+      let selected = Array.from(sel.selectedOptions).map(o => o.value);
+      if (selected.includes('all') || !selected.length) renderNews();
+      else renderNews(news.filter(n => selected.includes(n.tag)));
+    }
+
+    // ---- ПРЕДПРОСМОТР (modal) ----
+    function showPreview() {
+      let tag = document.getElementById('tag-select').value;
+      let html = document.getElementById('editor').innerHTML.trim();
+      let img = document.getElementById('preview-image').src;
+      document.getElementById('preview-tag').innerText = tag;
+      document.getElementById('preview-text').innerHTML = html + (img && img.startsWith('data:') ? `<img src="${img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
+      document.getElementById('preview-date').innerText = new Date().toLocaleString();
+      document.getElementById('preview-modal').style.display = 'flex';
+    }
+
+    function showPreviewFromFeed(i) {
+      let n = news[i];
+      document.getElementById('preview-tag').innerText = n.tag;
+      document.getElementById('preview-text').innerHTML = n.html + (n.img ? `<img src="${n.img}" style="width:96%;border-radius:12px;margin:16px 0;">` : "");
+      document.getElementById('preview-date').innerText = n.date;
+      document.getElementById('preview-modal').style.display = 'flex';
+    }
+
+    function hidePreview(e) {
+      if (!e || e.target === document.getElementById('preview-modal') || e.target.id === "preview-close")
+        document.getElementById('preview-modal').style.display = 'none';
+    }
+
+    // ---- Уведомления ----
+    function showNotification(txt, type = "info") {
+      let c = document.getElementById('notifications-container');
+      let d = document.createElement('div');
+      d.className = 'notification ' + type;
+      d.innerText = txt;
+      c.appendChild(d);
+      setTimeout(() => { d.style.animation = "slideOut .42s forwards"; }, 2800);
+      setTimeout(() => { if (d.parentNode) c.removeChild(d); }, 3500);
+    }
+
+    // ---- Уведомления: permission toggle ----
+    document.getElementById('notification-toggle').onclick = function () {
+      let btn = this;
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active'); btn.innerText = '🔔 Увімкнути повідомлення';
+        localStorage.setItem('notifications', '0');
+        showNotification("Повідомлення вимкнені", "info");
+      } else {
+        btn.classList.add('active'); btn.innerText = '🔕 Вимкнути повідомлення';
+        localStorage.setItem('notifications', '1');
+        showNotification("Повідомлення ввімкнені!", "success");
+      }
+    };
+
+    (() => {
+      if (localStorage.getItem('notifications') === '1') {
+        document.getElementById('notification-toggle').classList.add('active');
+        document.getElementById('notification-toggle').innerText = '🔕 Вимкнути повідомлення';
+      }
+    })();
+
+    // ---- ИНИЦИАЛИЗАЦИЯ (загрузка при старте) ----
+    document.addEventListener('DOMContentLoaded', () => {
+      renderNews(); renderSuggestions();
+      renderNewsByTags(document.getElementById('tag-filter-select'));
+      if (localStorage.getItem('news') && news.length) document.getElementById('delete-all-btn').hidden = false;
+      
+      document.addEventListener('keydown', function (e) {
+        if (e.key === "Escape" && document.getElementById('login-panel').style.display === 'block')
+          closeLoginPanel();
+      });
     });
-    evt.currentTarget.classList.add('active');
-    evt.currentTarget.setAttribute('aria-selected', 'true');
-    // Секции
-    document.querySelectorAll('main section').forEach(sec => sec.classList.remove('active'));
-    document.getElementById(tabName).classList.add('active');
-  }
-
-  // Уведомления
-  const notificationsContainer = document.getElementById('notifications-container');
-  function notify(message, type='info', timeout=3500) {
-    if(!notificationsEnabled) return;
-    const note = document.createElement('div');
-    note.className = `notification ${type}`;
-    note.textContent = message;
-    notificationsContainer.appendChild(note);
-    setTimeout(() => {
-      note.style.animation = 'slideOut 0.5s forwards';
-      setTimeout(() => notificationsContainer.removeChild(note), 500);
-    }, timeout);
-  }
-
-  // Загрузка состояния входа
-  function checkLoginStatus() {
-    const logged = localStorage.getItem(STORAGE_KEYS.login);
-    if(logged === 'true'){
-      isWriterLoggedIn = true;
-      loginBtn.style.display = 'none';
-      adminTabBtn.style.display = 'inline-flex';
-      deleteAllBtn.hidden = loadNews().length === 0;
-    }
-  }
-
-  // Канал для уведомлений при добавлении новости (BroadcastChannel)
-  channel.onmessage = e => {
-    try {
-      const news = JSON.parse(e.data);
-      // Если уведомления включены, и это новая новость
-      if(notificationsEnabled){
-        notify(`Нова новина в категорії "${news.tag}"`, 'info', 5000);
-      }
-      // Перерисуем новости если текущий фильтр подходит
-      if(tagFilterSelect.value === 'all' || tagFilterSelect.value === news.tag){
-        renderNews(tagFilterSelect.value);
-      }
-    } catch {
-      // ignore
-    }
-  };
-
-  // Переключение уведомлений
-  function toggleNotifications() {
-    notificationsEnabled = !notificationsEnabled;
-    if(notificationsEnabled){
-      notificationToggle.classList.add('active');
-      notificationToggle.textContent = 'Вимкнути повідомлення';
-      notify('Повідомлення ввімкнено', 'success', 2500);
-    } else {
-      notificationToggle.classList.remove('active');
-      notificationToggle.textContent = 'Увімкнути повідомлення';
-      notify('Повідомлення вимкнено', 'info', 2500);
-    }
-    localStorage.setItem(STORAGE_KEYS.notifications, notificationsEnabled.toString());
-  }
-
-  notificationToggle.addEventListener('click', toggleNotifications);
-
-  // Загрузка состояния уведомлений
-  function loadNotificationStatus() {
-    const val = localStorage.getItem(STORAGE_KEYS.notifications);
-    notificationsEnabled = val === 'true';
-    if(notificationsEnabled){
-      notificationToggle.classList.add('active');
-      notificationToggle.textContent = 'Вимкнути повідомлення';
-    } else {
-      notificationToggle.classList.remove('active');
-      notificationToggle.textContent = 'Увімкнути повідомлення';
-    }
-  }
-
-  // Обновление временной метки последней новости (для уведомлений)
-  function updateLastNewsTimestamp(){
-    const news = loadNews();
-    if(news.length === 0){
-      localStorage.removeItem(STORAGE_KEYS.lastNewsTimestamp);
-    } else {
-      let lastDate = news.reduce((max, n) => new Date(n.date) > max ? new Date(n.date) : max, new Date(0));
-      localStorage.setItem(STORAGE_KEYS.lastNewsTimestamp, lastDate.toISOString());
-    }
-  }
-
-  // Проверка на новые новости при загрузке
-  function checkNewNewsOnLoad(){
-    const lastTimestamp = localStorage.getItem(STORAGE_KEYS.lastNewsTimestamp);
-    if(!lastTimestamp) return;
-
-    const news = loadNews();
-    const newest = news.reduce((max, n) => new Date(n.date) > max ? new Date(n.date) : max, new Date(0));
-    if(new Date(lastTimestamp) < newest){
-      if(notificationsEnabled){
-        notify('Є нові новини з моменту вашого останнього візиту!', 'info', 7000);
-      }
-      updateLastNewsTimestamp();
-    }
-  }
-
-  // Экрани і інтерфейс
-  function initialize() {
-    loadTheme();
-    loadNotificationStatus();
-    checkLoginStatus();
-    renderNews();
-    renderSuggestions();
-    checkNewNewsOnLoad();
-  }
-
-  // Escape HTML (для защиты от XSS)
-  function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-  }
-
-  // Обработка hash для открытия новости по ссылке
-  function checkHashNews() {
-    if(window.location.hash) {
-      const id = window.location.hash.slice(1);
-      const allNews = loadNews();
-      const newsItem = allNews.find(n => n.id === id);
-      if(newsItem){
-        previewTag.textContent = newsItem.tag;
-        previewText.innerHTML = newsItem.html;
-        previewDate.textContent = new Date(newsItem.date).toLocaleString('uk-UA');
-        previewModal.style.display = 'flex';
-      }
-    }
-  }
-
-  // Переключатель темы (по двойному клику по заголовку)
-  document.querySelector('header').addEventListener('dblclick', toggleTheme);
-
-  // Инициализация
-  initialize();
-  checkHashNews();
-
-</script>
-
+  </script>
 </body>
+
 </html>
