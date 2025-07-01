@@ -958,11 +958,11 @@
       width: 95%;
       padding: 1rem;
       box-sizing: border-box;
-      right: -100%; /* ИСПРАВЛЕНИЕ: Скрываем полностью за экраном */
+      right: -100%;
     }
     
     #sidebar.open {
-      right: 0; /* При открытии показываем */
+      right: 0;
     }
     
     .tag-options {
@@ -1040,7 +1040,7 @@
     <span>ТСНС Новини</span>
     <div class="header-controls">
       <button id="theme-toggle-btn" class="header-btn" title="Змінити тему">🌗</button>
-      <button id="login-btn" class="header-btn" onclick="showLoginPanel()" title="Вхід для копірайтера">🔑</button>
+      <button id="login-btn" class="header-btn admin-only" onclick="showLoginPanel()" title="Вхід для копірайтера">🔑</button>
       <button id="notification-toggle" class="header-btn" title="Увімкнути/вимкнути повідомлення">🔔</button>
       <button id="logout-btn" class="header-btn admin-only" onclick="logoutWriter()" title="Вийти">🚪</button>
     </div>
@@ -1360,56 +1360,33 @@
     }
 
     // Вход администратора
-  async function loginWriter() {
-    const email = document.getElementById('writer-email').value.trim();
-    const password = document.getElementById('writer-pass').value.trim();
+    async function loginWriter() {
+      const email = document.getElementById('writer-email').value.trim();
+      const password = document.getElementById('writer-pass').value.trim();
 
-    if (!email || !password) {
-      showNotification("Введіть email та пароль", "error");
-      return;
-    }
+      if (!email || !password) {
+        showNotification("Введіть email та пароль", "error");
+        return;
+      }
 
-    try {
-      // 1. Пробуем войти
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
-      // 2. Проверяем, подтвержден ли email (если требуется)
-      if (userCredential.user.emailVerified || true) { // Удалите || true для реальной проверки
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         showNotification("Успішний вхід!", "success");
         closeLoginPanel();
-        toggleAdminUI(true);
-      } else {
-        await sendEmailVerification(userCredential.user);
-        showNotification("Підтвердіть email! Лист відправлено.", "info");
-        await signOut(auth);
-      }
-    } catch (error) {
-      console.error("Full error object:", error);
-      
-      const errorMap = {
-        'auth/invalid-credential': 'Невірні облікові дані',
-        'auth/user-not-found': 'Користувача не знайдено',
-        'auth/wrong-password': 'Невірний пароль',
-        'auth/invalid-email': 'Невірний формат email',
-        'auth/user-disabled': 'Акаунт вимкнений',
-        'auth/too-many-requests': 'Забагато спроб. Спробуйте пізніше'
-      };
-
-      const errorMessage = errorMap[error.code] || `Помилка входу: ${error.message}`;
-      showNotification(errorMessage, "error");
-      
-      // Дополнительная диагностика
-      if (error.code === 'auth/invalid-credential') {
-        console.warn("Диагностика:");
-        console.log("Проверьте:", {
-          emailCorrect: email.includes('@'),
-          passwordLength: password.length >= 6,
-          authConfig: auth.config,
-          currentUser: auth.currentUser
-        });
+      } catch (error) {
+        console.error("Помилка входу:", error);
+        const errorMap = {
+          'auth/invalid-credential': 'Невірні облікові дані',
+          'auth/user-not-found': 'Користувача не знайдено',
+          'auth/wrong-password': 'Невірний пароль',
+          'auth/invalid-email': 'Невірний формат email',
+          'auth/user-disabled': 'Акаунт вимкнений',
+          'auth/too-many-requests': 'Забагато спроб. Спробуйте пізніше'
+        };
+        const errorMessage = errorMap[error.code] || `Помилка входу: ${error.message}`;
+        showNotification(errorMessage, "error");
       }
     }
-  }
 
     // Выход администратора
     function logoutWriter() {
@@ -1422,15 +1399,10 @@
 
     // Переключение UI для администратора
     function toggleAdminUI(loggedIn) {
-      const adminElements = document.querySelectorAll('.admin-only');
       if (loggedIn) {
         document.body.classList.add('admin-visible');
-        document.getElementById("admin-tab-btn").style.display = "";
-        document.getElementById("logout-btn").style.display = "flex";
       } else {
         document.body.classList.remove('admin-visible');
-        document.getElementById("admin-tab-btn").style.display = "none";
-        document.getElementById("logout-btn").style.display = "none";
       }
     }
 
@@ -1448,7 +1420,6 @@
         return; 
       }
       
-      // Обработка изображений
       const files = document.getElementById('suggestion-image').files;
       const images = [];
       
@@ -1470,35 +1441,29 @@
             await processFile(files[i], i);
           }
           
-          // Сохранение предложения в Firebase
           const newSuggestionRef = push(suggestionsRef);
           set(newSuggestionRef, {
             text,
             images,
             date: formatDate(new Date())
-          })
-          .then(() => {
+          }).then(() => {
             document.getElementById('suggested-news').value = "";
             document.getElementById('suggestion-image').value = "";
             showNotification("Дякуємо за пропозицію!", "success");
-          })
-          .catch((error) => {
+          }).catch((error) => {
             showNotification("Помилка збереження: " + error.message, "error");
           });
         })();
       } else {
-        // Сохранение предложения без изображений
         const newSuggestionRef = push(suggestionsRef);
         set(newSuggestionRef, {
           text,
           images: [],
           date: formatDate(new Date())
-        })
-        .then(() => {
+        }).then(() => {
           document.getElementById('suggested-news').value = "";
           showNotification("Дякуємо за пропозицію!", "success");
-        })
-        .catch((error) => {
+        }).catch((error) => {
           showNotification("Помилка збереження: " + error.message, "error");
         });
       }
@@ -1571,7 +1536,6 @@
         if (s) {
           document.getElementById('editor').innerHTML = s.text;
           
-          // Вставляем изображения из предложения
           if (s.images && s.images.length > 0) {
             s.images.forEach(img => {
               const imgElem = document.createElement('img');
@@ -1585,9 +1549,7 @@
             });
           }
           
-          // Удаляем предложение после публикации
           remove(suggestionRef);
-          
           showTab('admin');
           showNotification("Пропозицію завантажено в редактор", "info");
         }
@@ -1605,7 +1567,6 @@
 
     // ---- ПУБЛИКАЦИЯ НОВОСТЕЙ (ADMIN) ----
     function publishNews() {
-      // Получаем выбранные теги
       const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
         .map(checkbox => checkbox.value);
       
@@ -1625,19 +1586,13 @@
         tags: selectedTags,
         html,
         date: formatDate(new Date())
-      })
-      .then(() => {
+      }).then(() => {
         showNotification("Новину опубліковано!", "success");
-        
-        // Сброс формы
         document.getElementById('editor').innerHTML = "";
         document.getElementById('image-upload').value = "";
         document.querySelectorAll('input[name="pub-tag"]').forEach(cb => cb.checked = false);
-        
-        // Переход на вкладку новостей
         showTab('news');
-      })
-      .catch((error) => {
+      }).catch((error) => {
         showNotification("Помилка публікації: " + error.message, "error");
       });
     }
@@ -1646,14 +1601,17 @@
       let feed = document.getElementById('news-feed');
       if (!feed) return;
       
-      // Получаем выбранные теги для фильтрации
+      // Сортируем новости по дате (новые сначала)
+      const sortedNews = [...news].sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+      
       const selectedTags = Array.from(document.querySelectorAll('input[name="tag"]:checked'))
         .map(checkbox => checkbox.value);
       
-      // Если выбран тег "Все" или ничего не выбрано, показываем все новости
       const filteredNews = (selectedTags.includes('all') || selectedTags.length === 0) 
-        ? news 
-        : news.filter(n => n.tags.some(tag => selectedTags.includes(tag)));
+        ? sortedNews 
+        : sortedNews.filter(n => n.tags.some(tag => selectedTags.includes(tag)));
       
       feed.innerHTML = filteredNews.length
         ? filteredNews.map((n, i) => `
@@ -1663,7 +1621,7 @@
             <time>${n.date ?? ""}</time>
             <div class="actions">
               <button onclick="copyNewsLink('${n.id}')">🔗 Копіювати посилання</button>
-              <button class="admin-only" onclick="showPreviewFromFeed('${n.id}')">👁️ Перегляд</button>
+              <button class="admin-only" onclick="showPreviewFromFeed('${n.id}')">👁️ Перегляд</button>
               <button class="admin-only" onclick="deleteNews('${n.id}')">🗑️ Видалити</button>
             </div>
           </div>
@@ -1673,7 +1631,6 @@
       document.getElementById('delete-all-btn').hidden = !filteredNews.length;
     }
     
-    // Копирование ссылки на новость
     function copyNewsLink(id) {
       const url = window.location.href.split('#')[0] + `#news-${id}`;
       navigator.clipboard.writeText(url).then(() => {
@@ -1706,14 +1663,12 @@
       }
     }
 
-    // --- Теги фильтр ---
     function renderNewsByTags() {
       renderNews(news);
     }
 
     // ---- ПРЕДПРОСМОТР (modal) ----
     function showPreview() {
-      // Получаем выбранные теги
       const selectedTags = Array.from(document.querySelectorAll('input[name="pub-tag"]:checked'))
         .map(checkbox => checkbox.value);
       
@@ -1784,15 +1739,25 @@
       // Подписка на новости
       onValue(newsRef, (snapshot) => {
         const newsData = snapshot.val();
-        news = newsData ? Object.keys(newsData).map(key => ({ id: key, ...newsData[key] })).reverse() : [];
+        news = newsData ? Object.keys(newsData).map(key => ({ 
+          id: key, 
+          ...newsData[key],
+          date: formatDate(new Date(newsData[key].date || Date.now()))
+        })).sort((a, b) => new Date(b.date) - new Date(a.date)) : [];
         renderNews(news);
+        document.getElementById('news-loader').style.display = 'none';
+      }, (error) => {
+        console.error("Ошибка загрузки новостей:", error);
         document.getElementById('news-loader').style.display = 'none';
       });
       
       // Подписка на предложения
       onValue(suggestionsRef, (snapshot) => {
         const suggestionsData = snapshot.val();
-        suggestions = suggestionsData ? Object.keys(suggestionsData).map(key => ({ id: key, ...suggestionsData[key] })) : [];
+        suggestions = suggestionsData ? Object.keys(suggestionsData).map(key => ({ 
+          id: key, 
+          ...suggestionsData[key]
+        })) : [];
         renderSuggestions(suggestions);
         renderAdminSuggestions(suggestions);
         document.getElementById('suggestions-loader').style.display = 'none';
@@ -1816,7 +1781,6 @@
         if (newsElement) {
           setTimeout(() => {
             newsElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            newsElement.style.animation = 'pulse 1s';
           }, 500);
         }
       }
